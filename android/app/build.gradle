@@ -49,6 +49,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [appAuthRedirectScheme: "com.r3grashopper.dev.flutter.integration_test"]
     }
 
     buildTypes {

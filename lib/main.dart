@@ -60,17 +60,19 @@ class _MyHomePageState extends State<MyHomePage> {
   FlutterAppAuth appAuth = const FlutterAppAuth();
 
   void _incrementCounter() {
-    // auth() async {
-    //   final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
-    //     AuthorizationTokenRequest(
-    //       'c5991d3f-bd72-4fb7-b74e-55ef3b82c5bf',
-    //       'msauth://dev.flutter.integration_test/VzSiQcXRmi2kyjzcA%2BmYLEtbGVs%3D',
-    //       discoveryUrl: 'https://login.microsoftonline.com/6d446957-50d8-409a-a8b2-b99f4b4eec04/v2.0/.well-known/openid-configuration',
-    //       scopes: ['openid','profile', 'email', 'offline_access', 'api'],
-    //     ),
-    //   );
+    auth() async {
+      print("呼び出しかいし");
+      final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
+        AuthorizationTokenRequest(
+          'c5991d3f-bd72-4fb7-b74e-55ef3b82c5bf',
+          'msauth://dev.flutter.integration_test/VzSiQcXRmi2kyjzcA%2BmYLEtbGVs%3D',
+          discoveryUrl: 'https://login.microsoftonline.com/6d446957-50d8-409a-a8b2-b99f4b4eec04/v2.0/.well-known/openid-configuration',
+          scopes: ['openid','profile', 'email', 'offline_access', 'api'],
+        ),
+      );
       print(result);
     }
+    auth();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
