@@ -67,9 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
           'c5991d3f-bd72-4fb7-b74e-55ef3b82c5bf',
           'msauth://dev.flutter.integration_test/VzSiQcXRmi2kyjzcA%2BmYLEtbGVs%3D',
           discoveryUrl: 'https://login.microsoftonline.com/6d446957-50d8-409a-a8b2-b99f4b4eec04/v2.0/.well-known/openid-configuration',
-          scopes: ['openid','profile', 'email', 'offline_access', 'api'],
+          scopes: ['https://graph.microsoft.com/User.Read'],
         ),
       );
+      print("呼び出し終了");
       print(result);
     }
     auth();
