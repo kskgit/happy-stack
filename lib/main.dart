@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -62,17 +63,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     auth() async {
-      print("呼び出しかいし");
-      final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
-        AuthorizationTokenRequest(
-          'c5991d3f-bd72-4fb7-b74e-55ef3b82c5bf',
-          'msauth://dev.flutter.integration_test/VzSiQcXRmi2kyjzcA%2BmYLEtbGVs%3D',
-          discoveryUrl: 'https://login.microsoftonline.com/6d446957-50d8-409a-a8b2-b99f4b4eec04/v2.0/.well-known/openid-configuration',
-          scopes: ['https://graph.microsoft.com/User.Read'],
-        ),
-      );
-      print("呼び出し終了");
-      print(result);
+      try {
+        final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
+          AuthorizationTokenRequest(
+            dotenv.get('CLIENT_ID'),
+            dotenv.get('REDIRECT_URL'),
+            discoveryUrl: dotenv.get('DISCOVERY_URL'),
+            scopes: ['openid'],
+          ),
+        );
+        print(result?.accessToken);
+      } catch (e) {
+        print('Error during authorization: $e');
+        throw e;
+      }
     }
     auth();
     setState(() {
