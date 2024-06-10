@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/auth_service.dart';
+import 'package:flutter_tutorial/login_screen.dart';
 
 void main() async {
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
   runApp(const MyApp());
 }
 
@@ -13,8 +15,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return const ProviderScope(
+      child: MaterialApp(
+        home: LoginScreen(),
+      ),
     );
   }
 }
@@ -24,6 +28,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final authService = ref.watch(authProvider);
     return DefaultTabController(
       length: 7,
       child: Scaffold(
@@ -42,7 +47,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             DayView(),
             DayView(),
@@ -63,11 +68,13 @@ class HomePage extends StatelessWidget {
 }
 
 class DayView extends StatelessWidget {
+  const DayView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: [
+      padding: const EdgeInsets.all(16),
+      children: const [
         EventCard(
           icon: Icons.emoji_emotions,
           text: '呪術廻戦',
@@ -90,17 +97,17 @@ class DayView extends StatelessWidget {
 
 
 class EventCard extends StatelessWidget {
+
+  const EventCard({required this.icon, required this.text, required this.iconBgColor, super.key});
   final IconData icon;
   final String text;
   final Color iconBgColor;
-
-  EventCard({required this.icon, required this.text, required this.iconBgColor});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: ListTile(
         leading: CircleAvatar(
@@ -110,25 +117,5 @@ class EventCard extends StatelessWidget {
         title: Text(text),
       ),
     );
-  }
-}
-
-
-FlutterAppAuth appAuth = const FlutterAppAuth();
-
-auth() async {
-  try {
-    final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
-      AuthorizationTokenRequest(
-        dotenv.get('CLIENT_ID'),
-        dotenv.get('REDIRECT_URL'),
-        discoveryUrl: dotenv.get('DISCOVERY_URL'),
-        scopes: ['openid'],
-      ),
-    );
-    print(result?.accessToken);
-  } catch (e) {
-    print('Error during authorization: $e');
-    throw e;
   }
 }
