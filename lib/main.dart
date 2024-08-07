@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tutorial/auth_service.dart';
 import 'package:flutter_tutorial/login_screen.dart';
 
 void main() async {
@@ -9,113 +8,77 @@ void main() async {
   runApp(const MyApp());
 }
 
+// ignore: public_member_api_docs
 class MyApp extends StatelessWidget {
+  // ignore: public_member_api_docs
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const ProviderScope(
+    return ProviderScope(
       child: MaterialApp(
-        home: LoginScreen(),
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // final authService = ref.watch(authProvider);
-    return DefaultTabController(
-      length: 7,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('トップページ'),
-          bottom: const TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(text: '月'),
-              Tab(text: '火'),
-              Tab(text: '水'),
-              Tab(text: '木'),
-              Tab(text: '金'),
-              Tab(text: '土'),
-              Tab(text: '日'),
-            ],
+        home: Scaffold(
+          appBar: AppBar(title: const Text('Bubble Border Example')),
+          body: Center(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const ShapeDecoration(
+                color: Colors.black,
+                shape: BubbleBorder(),
+                shadows: [
+                  BoxShadow(
+                    blurRadius: 1,
+                    offset: Offset(10, 10),
+                  ),
+                ],
+              ),
+              child:
+                  const Text('ふきだしです', style: TextStyle(color: Colors.black)),
+            ),
           ),
         ),
-        body: const TabBarView(
-          children: [
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
-        ),
       ),
     );
   }
 }
 
-class DayView extends StatelessWidget {
-  const DayView({super.key});
+// ignore: public_member_api_docs
+class BubbleBorder extends ShapeBorder {
+  // ignore: public_member_api_docs
+  const BubbleBorder({this.usePadding = true});
+  // ignore: public_member_api_docs
+  final bool usePadding;
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        EventCard(
-          icon: Icons.emoji_emotions,
-          text: '呪術廻戦',
-          iconBgColor: Colors.orange,
-        ),
-        EventCard(
-          icon: Icons.coffee,
-          text: '朝からハンドドリップでコーヒー淹れる',
-          iconBgColor: Colors.brown,
-        ),
-        EventCard(
-          icon: Icons.favorite,
-          text: 'あああああああああああああああああああああああああ・・・',
-          iconBgColor: Colors.red,
-        ),
-      ],
-    );
-  }
-}
-
-
-class EventCard extends StatelessWidget {
-
-  const EventCard({required this.icon, required this.text, required this.iconBgColor, super.key});
-  final IconData icon;
-  final String text;
-  final Color iconBgColor;
+  EdgeInsetsGeometry get dimensions =>
+      EdgeInsets.only(bottom: usePadding ? 16 : 0);
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: iconBgColor,
-          child: Icon(icon, color: Colors.white),
-        ),
-        title: Text(text),
-      ),
-    );
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) =>
+      getOuterPath(rect, textDirection: textDirection);
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    final r =
+        Rect.fromPoints(rect.topLeft, rect.bottomRight - const Offset(0, 12));
+    return Path()
+      ..addRRect(RRect.fromRectAndRadius(r, const Radius.circular(8)))
+      ..moveTo(r.bottomCenter.dx - 10, r.bottomCenter.dy)
+      ..relativeLineTo(10, 12)
+      ..relativeLineTo(10, -12)
+      ..close();
   }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawPath(getOuterPath(rect, textDirection: textDirection), paint);
+  }
+
+  @override
+  ShapeBorder scale(double t) => this;
 }
