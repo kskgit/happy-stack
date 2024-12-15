@@ -4,6 +4,6 @@
     "config:recommended"
   ],
   "schedule": [
-    "every day"
+    "every day at 03:00"
   ]
 }
