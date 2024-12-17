@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
   runApp(const MusicMatcherApp());
+  final HttpLink httpLink = HttpLink(
+    'https://api.github.com/graphql',
+  );
 }
 
 class MusicMatcherApp extends StatelessWidget {
