@@ -47,3 +47,5 @@ app.*.map.json
 
 # flutter_dotenv
 .env
+
+**/*.g.dart
