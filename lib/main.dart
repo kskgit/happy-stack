@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/graphql_client.dart';
 import 'package:flutter_tutorial/login_screen.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() async {
   await dotenv.load();
-  runApp(const MyApp());
+  runApp(
+    ProviderScope(
+      child: GraphQLProvider(client: graphQLClient(), child: const MyApp()),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -94,10 +100,13 @@ class DayView extends StatelessWidget {
   }
 }
 
-
 class EventCard extends StatelessWidget {
-
-  const EventCard({required this.icon, required this.text, required this.iconBgColor, super.key});
+  const EventCard({
+    required this.icon,
+    required this.text,
+    required this.iconBgColor,
+    super.key,
+  });
   final IconData icon;
   final String text;
   final Color iconBgColor;
