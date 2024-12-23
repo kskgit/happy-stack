@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'graphql_client.g.dart';
-@riverpod
-GraphQLClient graphQLClient(Ref ref) {
+ValueNotifier<GraphQLClient> graphQLClient() {
   final httpLink = HttpLink(
-    'https://api.github.com/graphql',
+    'localhost:8000',
   );
 
   final authLink = AuthLink(
@@ -14,8 +14,8 @@ GraphQLClient graphQLClient(Ref ref) {
 
   final link = authLink.concat(httpLink);
 
-  return GraphQLClient(
+  return ValueNotifier(GraphQLClient(
     link: link,
     cache: GraphQLCache(store: HiveStore()),
-  );
+  ),);
 }
