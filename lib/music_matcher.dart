@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
@@ -111,60 +112,105 @@ class SearchBox extends StatelessWidget {
   }
 }
 
-class PlaylistSection extends StatelessWidget {
+class PlaylistSection extends ConsumerWidget {
   const PlaylistSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    const featuredPlaylists = '''
+      query FeaturedPlaylists {
+        featuredPlaylists {
+          id
+          name
+          description
+          tracks {
+            id
+            name
+            durationMs
+            explicit
+            uri
+          }
+        }
+      }
+      ''';
+    // graphQLClient.
     return Container(
       color: Colors.blue[800],
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Listen to...',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 20),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            children: const [
-              PlaylistCard(
-                title: 'Sweet Beats & Eats',
-                description: 'Tooth-achingly sweet beats for your sweet eats',
+      child: Query(
+        options: QueryOptions(
+          document: gql(featuredPlaylists),
+        ),
+        builder: (
+          QueryResult result, {
+          VoidCallback? refetch,
+          FetchMore? fetchMore,
+        }) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
+
+          if (result.isLoading) {
+            return const Text('Loading');
+          }
+
+          final res = result.data.toString();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                res,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              PlaylistCard(
-                title: 'Grilling Tunes For You',
-                description: 'Set the barbecue mood. Upbeat and laid-back tracks...',
-              ),
-              PlaylistCard(
-                title: 'Sizzle and Sounds',
-                description: 'This playlist blends rhythmic beats and melodic harmonies...',
-              ),
-              PlaylistCard(
-                title: 'Zesty Culinary Harmony',
-                description: 'Infuse flavor into your kitchen. This playlist merges zesty...',
+              const SizedBox(height: 20),
+              GridView.count(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: const [
+                  PlaylistCard(
+                    title: 'Sweet Beats & Eats',
+                    description:
+                        'Tooth-achingly sweet beats for your sweet eats',
+                  ),
+                  PlaylistCard(
+                    title: 'Grilling Tunes For You',
+                    description:
+                        'Set the barbecue mood. Upbeat and laid-back tracks...',
+                  ),
+                  PlaylistCard(
+                    title: 'Sizzle and Sounds',
+                    description:
+                        'This playlist blends rhythmic beats and melodic harmonies...',
+                  ),
+                  PlaylistCard(
+                    title: 'Zesty Culinary Harmony',
+                    description:
+                        'Infuse flavor into your kitchen. This playlist merges zesty...',
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
 
 class PlaylistCard extends StatelessWidget {
-
-  const PlaylistCard({required this.title, required this.description, super.key});
+  const PlaylistCard({
+    required this.title,
+    required this.description,
+    super.key,
+  });
   final String title;
   final String description;
 
