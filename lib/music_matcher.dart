@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
-  runApp(const MusicMatcherApp());
+  runApp(
+    ProviderScope(
+      child: GraphQLProvider(
+        client: graphQLClient(),
+        child: const MusicMatcherApp(),
+      ),
+    ),
+  );
 }
 
 class MusicMatcherApp extends StatelessWidget {
