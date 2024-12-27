@@ -162,14 +162,21 @@ class PlaylistSection extends ConsumerWidget {
             return const Text('Loading');
           }
 
-          final res = result.data.toString();
+          final playlists = (result.data!['featuredPlaylists'] as List)
+              .map(
+                (playlist) => PlaylistCard(
+                  title: playlist['name'] as String,
+                  description: playlist['description'] as String,
+                ),
+              )
+              .toList();
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                res,
-                style: const TextStyle(
+              const Text(
+                'プレイリスト',
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -182,28 +189,7 @@ class PlaylistSection extends ConsumerWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                children: const [
-                  PlaylistCard(
-                    title: 'Sweet Beats & Eats',
-                    description:
-                        'Tooth-achingly sweet beats for your sweet eats',
-                  ),
-                  PlaylistCard(
-                    title: 'Grilling Tunes For You',
-                    description:
-                        'Set the barbecue mood. Upbeat and laid-back tracks...',
-                  ),
-                  PlaylistCard(
-                    title: 'Sizzle and Sounds',
-                    description:
-                        'This playlist blends rhythmic beats and melodic harmonies...',
-                  ),
-                  PlaylistCard(
-                    title: 'Zesty Culinary Harmony',
-                    description:
-                        'Infuse flavor into your kitchen. This playlist merges zesty...',
-                  ),
-                ],
+                children: playlists,
               ),
             ],
           );
