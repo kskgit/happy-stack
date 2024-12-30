@@ -15,7 +15,14 @@ ValueNotifier<GraphQLClient> graphQLClient() {
   return ValueNotifier(
     GraphQLClient(
       link: link,
-      cache: GraphQLCache(store: InMemoryStore()),
+      cache: GraphQLCache(
+        store: HiveStore(),
+        partialDataPolicy: PartialDataCachePolicy.accept,
+        dataIdFromObject: (object) {
+          if (object['id'] != null) {}
+          return null;
+        },
+      ),
     ),
   );
 }

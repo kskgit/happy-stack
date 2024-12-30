@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+late Box<String> box;
+void main() async {
+  await initHiveForFlutter();
+
   runApp(
     ProviderScope(
       child: GraphQLProvider(
@@ -129,6 +133,7 @@ class PlaylistSection extends ConsumerWidget {
       query FeaturedPlaylists {
         featuredPlaylists {
           id
+          __typename
           name
           description
           tracks {
@@ -137,6 +142,7 @@ class PlaylistSection extends ConsumerWidget {
             durationMs
             explicit
             uri
+            __typename
           }
         }
       }
