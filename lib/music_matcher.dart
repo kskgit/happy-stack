@@ -5,6 +5,28 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 late Box<String> box;
+const queryFeaturedPlaylists = '''
+      query FeaturedPlaylists {
+        featuredPlaylists {
+          id
+          __typename
+          name
+          description
+          tracks {
+            id
+            name
+            durationMs
+            explicit
+            uri
+            __typename
+          }
+        }
+      }
+      ''';
+
+// 検索トリガー用のProviderを追加
+final searchTriggerProvider = StateProvider<int>((ref) => 0);
+
 void main() async {
   await initHiveForFlutter();
 
@@ -86,11 +108,11 @@ class HeaderSection extends StatelessWidget {
   }
 }
 
-class SearchBox extends StatelessWidget {
+class SearchBox extends ConsumerWidget {
   const SearchBox({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -116,7 +138,10 @@ class SearchBox extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              // 検索トリガーの値を更新
+              ref.read(searchTriggerProvider.notifier).state++;
+            },
           ),
         ],
       ),
@@ -129,37 +154,23 @@ class PlaylistSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const featuredPlaylists = '''
-      query FeaturedPlaylists {
-        featuredPlaylists {
-          id
-          __typename
-          name
-          description
-          tracks {
-            id
-            name
-            durationMs
-            explicit
-            uri
-            __typename
-          }
-        }
-      }
-      ''';
-    // graphQLClient.
+    // 検索トリガーの値を監視
+    ref.watch(searchTriggerProvider);
+
     return Container(
       color: Colors.blue[800],
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       child: Query(
         options: QueryOptions(
-          document: gql(featuredPlaylists),
+          document: gql(queryFeaturedPlaylists),
+          // fetchPolicy: FetchPolicy.cacheAndNetwork,
         ),
         builder: (
           QueryResult result, {
           VoidCallback? refetch,
           FetchMore? fetchMore,
         }) {
+          debugPrint(result.source!.name);
           if (result.hasException) {
             return Text(result.exception.toString());
           }
