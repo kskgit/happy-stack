@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/edit_screen.dart';
 
 void main() async {
   // await dotenv.load();
@@ -60,7 +61,18 @@ class HomePage extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet<void>(
+              context: context,
+              isScrollControlled: true,
+              builder: (BuildContext context) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  child: const EditScreen(),
+                );
+              },
+            );
+          },
           child: const Icon(Icons.add),
         ),
       ),
