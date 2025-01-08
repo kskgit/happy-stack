@@ -59,6 +59,7 @@ class _EditScreenState extends State<EditScreen> {
                     _selectedDays[index] = !_selectedDays[index];
                   });
                 },
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                 color: Colors.grey,
                 selectedColor: Colors.teal,
                 fillColor: Colors.teal.withOpacity(0.2),
