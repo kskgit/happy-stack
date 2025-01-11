@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_tutorial/time_state.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class EditScreen extends StatefulWidget {
+class EditScreen extends HookConsumerWidget {
   const EditScreen({super.key});
 
   @override
-  _EditScreenState createState() => _EditScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedDays = useState(List.generate(7, (_) => false));
 
-class _EditScreenState extends State<EditScreen> {
-  final List<bool> _selectedDays = List.generate(7, (index) => false);
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -53,11 +51,14 @@ class _EditScreenState extends State<EditScreen> {
               ),
               const SizedBox(height: 10),
               ToggleButtons(
-                isSelected: _selectedDays,
+                isSelected: selectedDays.value,
                 onPressed: (int index) {
-                  setState(() {
-                    _selectedDays[index] = !_selectedDays[index];
-                  });
+                  selectedDays.value = [
+                    for (var i = 0; i < selectedDays.value.length; i++)
+                      i == index
+                          ? !selectedDays.value[i]
+                          : selectedDays.value[i],
+                  ];
                 },
                 constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                 color: Colors.grey,
@@ -77,23 +78,25 @@ class _EditScreenState extends State<EditScreen> {
               const Row(
                 children: [
                   Text(
-                    '通知',
+                    '時間',
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
-              const Text(
-                '21:00',
-                style: TextStyle(fontSize: 24),
+              ElevatedButton(
+                onPressed: () => _selectTime(context, ref),
+                child: const Text('時刻を選択'),
               ),
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 100,
+                    vertical: 15,
+                  ),
                 ),
                 child: const Text(
                   '保存',
@@ -105,8 +108,10 @@ class _EditScreenState extends State<EditScreen> {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 100,
+                    vertical: 15,
+                  ),
                 ),
                 child: const Text(
                   '削除',
@@ -119,4 +124,14 @@ class _EditScreenState extends State<EditScreen> {
       ),
     );
   }
+}
+
+// 時刻選択を表示する関数
+Future<void> _selectTime(BuildContext context, WidgetRef ref) async {
+  final picked = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+
+  ref.read(timeStateProvider.notifier).updateTime(picked!);
 }
