@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_tutorial/time_picker.dart';
 import 'package:flutter_tutorial/time_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -84,10 +85,7 @@ class EditScreen extends HookConsumerWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () => _selectTime(context, ref),
-                child: const Text('時刻を選択'),
-              ),
+              const TimePickerWidget(),
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {},
