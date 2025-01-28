@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/edit_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
+  await dotenv.load();
+  await Supabase.initialize(
+    url: 'https://psdiicyjdgkrmsyxesxd.supabase.co',
+    anonKey: dotenv.env['SUPABASE_KEY']!,
+  );
+
   runApp(
     const ProviderScope(
       child: MyApp(),
