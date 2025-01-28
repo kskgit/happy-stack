@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/edit_screen.dart';
 
 void main() async {
-  // await dotenv.load();
   runApp(
     const ProviderScope(
       child: MyApp(),
