@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/day_view_state.dart';
 import 'package:flutter_tutorial/edit_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -37,7 +38,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final authService = ref.watch(authProvider);
     return DefaultTabController(
       length: 7,
       child: Scaffold(
@@ -87,31 +87,36 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class DayView extends StatelessWidget {
+class DayView extends ConsumerWidget {
   const DayView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        EventCard(
-          icon: Icons.emoji_emotions,
-          text: '呪術廻戦',
-          iconBgColor: Colors.orange,
-        ),
-        EventCard(
-          icon: Icons.coffee,
-          text: '朝からハンドドリップでコーヒー淹れる',
-          iconBgColor: Colors.brown,
-        ),
-        EventCard(
-          icon: Icons.favorite,
-          text: 'あああああああああああああああああああああああああ・・・',
-          iconBgColor: Colors.red,
-        ),
-      ],
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(dayViewStateProvider).when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) =>
+              Center(child: Text('エラーが発生しました: $error')),
+          data: (data) => ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              EventCard(
+                icon: Icons.emoji_emotions,
+                text: data.toString(),
+                iconBgColor: Colors.orange,
+              ),
+              const EventCard(
+                icon: Icons.coffee,
+                text: '朝からハンドドリップでコーヒー淹れる',
+                iconBgColor: Colors.brown,
+              ),
+              const EventCard(
+                icon: Icons.favorite,
+                text: 'あああああああああああああああああああああああああ・・・',
+                iconBgColor: Colors.red,
+              ),
+            ],
+          ),
+        );
   }
 }
 
