@@ -4,6 +4,26 @@ import 'package:flutter_tutorial/time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+enum _DayOfWeek {
+  monday(displayValue: '月'),
+  tuesday(displayValue: '火'),
+  wednesday(displayValue: '水'),
+  thursday(displayValue: '木'),
+  friday(displayValue: '金'),
+  saturday(displayValue: '土'),
+  sunday(displayValue: '日');
+
+  const _DayOfWeek({required this.displayValue});
+
+  final String displayValue;
+}
+
+class _SelectedDayOfWeek {
+  _SelectedDayOfWeek({required this.dayOfWeek, this.isSelected = false});
+  final _DayOfWeek dayOfWeek;
+  bool isSelected;
+}
+
 class EditScreen extends ConsumerStatefulWidget {
   const EditScreen({super.key});
 
@@ -13,6 +33,9 @@ class EditScreen extends ConsumerStatefulWidget {
 
 class _EditScreenState extends ConsumerState<EditScreen> {
   String _titel = '';
+  final List<_SelectedDayOfWeek> _selectedDays = _DayOfWeek.values
+      .map((day) => _SelectedDayOfWeek(dayOfWeek: day))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -62,30 +85,30 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              // ToggleButtons(
-              //   isSelected: selectedDays.value,
-              //   onPressed: (int index) {
-              //     selectedDays.value = [
-              //       for (var i = 0; i < selectedDays.value.length; i++)
-              //         i == index
-              //             ? !selectedDays.value[i]
-              //             : selectedDays.value[i],
-              //     ];
-              //   },
-              //   constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-              //   color: Colors.grey,
-              //   selectedColor: Colors.teal,
-              //   fillColor: Colors.teal.withOpacity(0.2),
-              //   borderRadius: BorderRadius.circular(10),
-              //   children: ['月', '火', '水', '木', '金', '土', '日']
-              //       .map(
-              //         (day) => Padding(
-              //           padding: const EdgeInsets.symmetric(horizontal: 12),
-              //           child: Text(day, style: const TextStyle(fontSize: 16)),
-              //         ),
-              //       )
-              //       .toList(),
-              // ),
+              ToggleButtons(
+                isSelected: _selectedDays.map((day) => day.isSelected).toList(),
+                onPressed: (int index) {
+                  setState(() {
+                    _selectedDays[index].isSelected =
+                        !_selectedDays[index].isSelected;
+                  });
+                },
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                color: Colors.grey,
+                selectedColor: Colors.teal,
+                borderRadius: BorderRadius.circular(10),
+                children: _selectedDays
+                    .map(
+                      (day) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          day.dayOfWeek.displayValue,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
               const SizedBox(height: 30),
               const Row(
                 children: [
