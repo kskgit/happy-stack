@@ -4,10 +4,12 @@ import 'package:flutter_tutorial/time_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TimePickerWidget extends HookConsumerWidget {
-  const TimePickerWidget({super.key});
+  const TimePickerWidget({required this.onTimeSelected, super.key});
+  final void Function(TimeOfDay) onTimeSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // todo 削除
     final selectedTime = ref.watch(timeStateProvider);
 
     Future<void> selectTime() async {
@@ -18,6 +20,7 @@ class TimePickerWidget extends HookConsumerWidget {
 
       if (picked != null && picked != selectedTime) {
         ref.read(timeStateProvider.notifier).updateTime(picked);
+        onTimeSelected(picked);
       }
     }
 

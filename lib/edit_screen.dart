@@ -36,6 +36,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
   final List<_SelectedDayOfWeek> _selectedDays = _DayOfWeek.values
       .map((day) => _SelectedDayOfWeek(dayOfWeek: day))
       .toList();
+  TimeOfDay notificationTime = const TimeOfDay(hour: 9, minute: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -113,13 +114,19 @@ class _EditScreenState extends ConsumerState<EditScreen> {
               const Row(
                 children: [
                   Text(
-                    '時間',
+                    '通知時間',
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
-              const TimePickerWidget(),
+              TimePickerWidget(
+                onTimeSelected: (TimeOfDay selectedTime) {
+                  setState(() {
+                    notificationTime = selectedTime;
+                  });
+                },
+              ),
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () async {
