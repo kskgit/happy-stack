@@ -6,7 +6,7 @@ part 'time_state.g.dart';
 @riverpod
 // Riverpodの状態管理では、setterよりもメソッドベースの更新を推奨
 // ignore_for_file: use_setters_to_change_properties
-class _getHour extends _$TimeState {
+class TimeState extends _$TimeState {
   @override
   TimeOfDay build() {
     return TimeOfDay.now();

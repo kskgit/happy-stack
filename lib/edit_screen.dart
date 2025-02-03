@@ -4,7 +4,7 @@ import 'package:flutter_tutorial/time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-enum _DayOfWeek {
+enum DayOfWeek {
   monday(displayValue: '月'),
   tuesday(displayValue: '火'),
   wednesday(displayValue: '水'),
@@ -13,15 +13,17 @@ enum _DayOfWeek {
   saturday(displayValue: '土'),
   sunday(displayValue: '日');
 
-  const _DayOfWeek({required this.displayValue});
+  const DayOfWeek({required this.displayValue});
 
   final String displayValue;
 }
 
-class _SelectedDayOfWeek {
-  _SelectedDayOfWeek({required this.dayOfWeek, this.isSelected = false});
-  final _DayOfWeek dayOfWeek;
-  bool isSelected;
+class SelectedDayOfWeek {
+  SelectedDayOfWeek({
+    required this.dayOfWeek,
+  });
+  final DayOfWeek dayOfWeek;
+  bool isSelected = false;
 }
 
 class EditScreen extends ConsumerStatefulWidget {
@@ -33,10 +35,9 @@ class EditScreen extends ConsumerStatefulWidget {
 
 class _EditScreenState extends ConsumerState<EditScreen> {
   String _titel = '';
-  final List<_SelectedDayOfWeek> _selectedDays = _DayOfWeek.values
-      .map((day) => _SelectedDayOfWeek(dayOfWeek: day))
-      .toList();
-  TimeOfDay notificationTime = const TimeOfDay(hour: 9, minute: 0);
+  final List<SelectedDayOfWeek> _selectedDays =
+      DayOfWeek.values.map((day) => SelectedDayOfWeek(dayOfWeek: day)).toList();
+  TimeOfDay _notificationTime = TimeOfDay.now();
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +124,18 @@ class _EditScreenState extends ConsumerState<EditScreen> {
               TimePickerWidget(
                 onTimeSelected: (TimeOfDay selectedTime) {
                   setState(() {
-                    notificationTime = selectedTime;
+                    _notificationTime = selectedTime;
                   });
                 },
               ),
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () async {
-                  await sendDataToApi(_titel);
+                  await _sendDataToApi(
+                    _titel,
+                    _selectedDays,
+                    _notificationTime,
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,
@@ -146,7 +151,9 @@ class _EditScreenState extends ConsumerState<EditScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  // TODO
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   padding: const EdgeInsets.symmetric(
@@ -167,19 +174,16 @@ class _EditScreenState extends ConsumerState<EditScreen> {
   }
 }
 
-// 時刻選択を表示する関数
-// Future<void> _selectTime(BuildContext context, WidgetRef ref) async {
-//   final picked = await showTimePicker(
-//     context: context,
-//     initialTime: TimeOfDay.now(),
-//   );
-
-//   ref.read(timeStateProvider.notifier).updateTime(picked!);
-// }
-
 // APIにデータを送信する関数を追加
-Future<void> sendDataToApi(String title) async {
-  debugPrint(title);
+Future<void> _sendDataToApi(
+  String title,
+  List<SelectedDayOfWeek> selectedDayOfWeek,
+  TimeOfDay notificationTime,
+) async {
   final supabase = Supabase.instance.client;
-  // supabase.from('stocks')
+  await supabase.from('stocks').insert({
+    'name': title,
+    'day_of_week': selectedDayOfWeek,
+    'notification_time': notificationTime,
+  });
 }
