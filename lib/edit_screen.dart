@@ -24,6 +24,12 @@ class SelectedDayOfWeek {
   });
   final DayOfWeek dayOfWeek;
   bool isSelected = false;
+  Map<String, dynamic> toJson() {
+    return {
+      'name': dayOfWeek.displayValue,
+      'value': isSelected,
+    };
+  }
 }
 
 class EditScreen extends ConsumerStatefulWidget {
@@ -184,6 +190,10 @@ Future<void> _sendDataToApi(
   await supabase.from('stocks').insert({
     'name': title,
     'day_of_week': selectedDayOfWeek,
-    'notification_time': notificationTime,
+    'notification_time': _timeToString(notificationTime),
   });
+}
+
+String _timeToString(TimeOfDay time) {
+  return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
 }
