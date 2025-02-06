@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/app_router.dart';
 import 'package:flutter_tutorial/day_view_state.dart';
 import 'package:flutter_tutorial/edit_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,21 +14,23 @@ void main() async {
   );
 
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const ProviderScope(
-      child: MaterialApp(
-        home: HomePage(),
+    return ProviderScope(
+      child: MaterialApp.router(
+        routerConfig: _appRouter.config(),
       ),
     );
   }
