@@ -51,3 +51,4 @@ app.*.map.json
 .env
 
 **/*.g.dart
+ios/Flutter/EnvironmentVariables.xcconfig
