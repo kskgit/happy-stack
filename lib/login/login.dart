@@ -28,7 +28,6 @@ class LoginScreen extends StatelessWidget {
 
     final googleSignIn = GoogleSignIn(
       clientId: iosClientId,
-      // serverClientId: webClientId,
     );
     final googleUser = await googleSignIn.signIn();
     final googleAuth = await googleUser!.authentication;
