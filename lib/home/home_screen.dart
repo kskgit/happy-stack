@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/edit/edit_screen.dart';
 import 'package:flutter_tutorial/home/day_view.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+@RoutePage()
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
