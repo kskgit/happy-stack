@@ -24,6 +24,9 @@ class AuthGuard extends AutoRouteGuard {
     if (session != null && !session.isExpired) {
       resolver.next();
     } else {
+      Supabase.instance.client.auth.refreshSession().then((_) {
+        resolver.next();
+      });
       router.push(const LoginRoute());
     }
   }
