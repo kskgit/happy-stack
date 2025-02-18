@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   await Supabase.initialize(
-    url: 'https://psdiicyjdgkrmsyxesxd.supabase.co',
+    url: Env.url,
     anonKey: Env.apiKey,
   );
 

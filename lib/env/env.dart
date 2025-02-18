@@ -4,6 +4,9 @@ part 'env.g.dart';
 
 @Envied(path: '.env')
 abstract class Env {
+  @EnviedField(varName: 'SUPABASE_URL', obfuscate: true)
+  static final String url = _Env.url;
+
   @EnviedField(varName: 'SUPABASE_KEY', obfuscate: true)
   static final String apiKey = _Env.apiKey;
 
