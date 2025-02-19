@@ -1,6 +1,7 @@
 // time_picker_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/edit/time_state.dart';
+import 'package:flutter_tutorial/shared/theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TimePickerWidget extends HookConsumerWidget {
@@ -26,7 +27,10 @@ class TimePickerWidget extends HookConsumerWidget {
 
     return TextButton(
       onPressed: selectTime,
-      child: Text(ref.read(timeStateProvider.notifier).getFormattedTime()),
+      child: Text(
+        ref.read(timeStateProvider.notifier).getFormattedTime(),
+        style: const TextStyle(fontSize: 22, color: AppColors.text),
+      ),
     );
   }
 }

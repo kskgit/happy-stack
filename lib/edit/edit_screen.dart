@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/edit/time_picker.dart';
+import 'package:flutter_tutorial/shared/theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -51,10 +52,11 @@ class _EditScreenState extends ConsumerState<EditScreen> {
       appBar: AppBar(
         title: const Text(
           '登録',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: AppColors.text),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: AppColors.text),
+        backgroundColor: AppColors.background,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -64,7 +66,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
               Row(
                 children: [
                   const Icon(
-                    Icons.abc,
+                    Icons.lightbulb,
                     size: 50,
                     color: Colors.orange,
                   ),
@@ -73,7 +75,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                     child: TextField(
                       decoration: const InputDecoration(
                         labelText: 'タイトル',
-                        hintText: '呪術廻戦',
+                        hintText: 'アニメを見る',
                         border: UnderlineInputBorder(),
                       ),
                       onChanged: (value) {
@@ -104,8 +106,8 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   });
                 },
                 constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                color: Colors.grey,
-                selectedColor: Colors.teal,
+                color: AppColors.secondary,
+                selectedColor: AppColors.primary,
                 borderRadius: BorderRadius.circular(10),
                 children: _selectedDays
                     .map(
@@ -146,7 +148,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
+                  backgroundColor: AppColors.button,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 100,
                     vertical: 15,
@@ -154,7 +156,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 ),
                 child: const Text(
                   '保存',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: AppColors.buttonText),
                 ),
               ),
               const SizedBox(height: 20),
@@ -163,7 +165,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   // TODO
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
+                  backgroundColor: AppColors.secondaryButton,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 100,
                     vertical: 15,

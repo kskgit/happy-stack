@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/env/env.dart';
 import 'package:flutter_tutorial/router/app_router.dart';
+import 'package:flutter_tutorial/shared/theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -29,7 +30,19 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: _appRouter.config(),
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          primaryColor: AppColors.primary,
+          scaffoldBackgroundColor: AppColors.background,
+          textTheme:
+              const TextTheme(bodyMedium: TextStyle(color: AppColors.text)),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.button,
+              foregroundColor: AppColors.buttonText,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
         ),
       ),
     );
