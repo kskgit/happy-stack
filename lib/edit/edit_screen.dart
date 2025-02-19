@@ -61,24 +61,29 @@ class _EditScreenState extends ConsumerState<EditScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(_titel),
-              const SizedBox(height: 20),
-              const Icon(
-                Icons.abc,
-                size: 50,
-                color: Colors.orange,
-              ),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'タイトル',
-                  hintText: '呪術廻戦',
-                  border: UnderlineInputBorder(),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _titel = value; // 入力値を普通の変数に保持
-                  });
-                },
+              Row(
+                children: [
+                  const Icon(
+                    Icons.abc,
+                    size: 50,
+                    color: Colors.orange,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'タイトル',
+                        hintText: '呪術廻戦',
+                        border: UnderlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _titel = value; // 入力値を普通の変数に保持
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 30),
               const Row(
