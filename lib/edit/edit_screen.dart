@@ -50,11 +50,9 @@ class _EditScreenState extends ConsumerState<EditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '編集ページ',
-          style: TextStyle(color: Colors.purple),
+          '登録',
+          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -70,7 +68,6 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 size: 50,
                 color: Colors.orange,
               ),
-              const SizedBox(height: 20),
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'タイトル',
