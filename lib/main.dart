@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp.router(
         routerConfig: _appRouter.config(),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        ),
       ),
     );
   }
