@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/edit/edit_state.dart';
 import 'package:flutter_tutorial/edit/time_picker.dart';
+import 'package:flutter_tutorial/router/app_router.dart';
 import 'package:flutter_tutorial/shared/theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -48,6 +51,14 @@ class _EditScreenState extends ConsumerState<EditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final createHappinessState = ref.watch(
+      createHappinessProvider(
+        _titel,
+        _selectedDays,
+        _notificationTime,
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -141,11 +152,17 @@ class _EditScreenState extends ConsumerState<EditScreen> {
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () async {
-                  await _sendDataToApi(
-                    _titel,
-                    _selectedDays,
-                    _notificationTime,
-                  );
+                  ref
+                      .read(
+                        createHappinessProvider(
+                          _titel,
+                          _selectedDays,
+                          _notificationTime,
+                        ),
+                      )
+                      .whenData(
+                        (data) => context.router.push(const HomeRoute()),
+                      );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.button,
@@ -154,10 +171,12 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                     vertical: 15,
                   ),
                 ),
-                child: const Text(
-                  '保存',
-                  style: TextStyle(color: AppColors.buttonText),
-                ),
+                child: createHappinessState.isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text(
+                        '保存',
+                        style: TextStyle(color: AppColors.buttonText),
+                      ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
