@@ -1,10 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
-import 'package:flutter_tutorial/features/edit/edit_state.dart';
+import 'package:flutter_tutorial/features/edit/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker.dart';
-import 'package:flutter_tutorial/routing/app_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,21 +42,13 @@ class EditScreen extends ConsumerStatefulWidget {
 }
 
 class _EditScreenState extends ConsumerState<EditScreen> {
-  String _titel = '';
+  String _title = '';
   final List<SelectedDayOfWeek> _selectedDays =
       DayOfWeek.values.map((day) => SelectedDayOfWeek(dayOfWeek: day)).toList();
   TimeOfDay _notificationTime = TimeOfDay.now();
 
   @override
   Widget build(BuildContext context) {
-    final createHappinessState = ref.watch(
-      createHappinessProvider(
-        _titel,
-        _selectedDays,
-        _notificationTime,
-      ),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -91,7 +81,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                       ),
                       onChanged: (value) {
                         setState(() {
-                          _titel = value; // 入力値を普通の変数に保持
+                          _title = value;
                         });
                       },
                     ),
@@ -150,33 +140,10 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 },
               ),
               const SizedBox(height: 50),
-              ElevatedButton(
-                onPressed: () async {
-                  ref
-                      .read(
-                        createHappinessProvider(
-                          _titel,
-                          _selectedDays,
-                          _notificationTime,
-                        ),
-                      )
-                      .whenData(
-                        (data) => context.router.push(const HomeRoute()),
-                      );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.button,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 100,
-                    vertical: 15,
-                  ),
-                ),
-                child: createHappinessState.isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text(
-                        '保存',
-                        style: TextStyle(color: AppColors.buttonText),
-                      ),
+              SaveButton(
+                title: _title,
+                selectedDayOfWeek: _selectedDays,
+                notificationTime: _notificationTime,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
