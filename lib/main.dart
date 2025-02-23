@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/env/env.dart';
-import 'package:flutter_tutorial/router/app_router.dart';
-import 'package:flutter_tutorial/shared/theme.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {

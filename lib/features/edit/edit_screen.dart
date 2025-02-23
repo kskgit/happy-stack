@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tutorial/edit/edit_state.dart';
-import 'package:flutter_tutorial/edit/time_picker.dart';
-import 'package:flutter_tutorial/router/app_router.dart';
-import 'package:flutter_tutorial/shared/theme.dart';
+import 'package:flutter_tutorial/constants/theme.dart';
+import 'package:flutter_tutorial/features/edit/edit_state.dart';
+import 'package:flutter_tutorial/features/edit/time_picker.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

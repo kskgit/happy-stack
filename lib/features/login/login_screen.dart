@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/env/env.dart';
-import 'package:flutter_tutorial/router/app_router.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_tutorial/home/home_screen.dart';
-import 'package:flutter_tutorial/login/login_screen.dart';
+import 'package:flutter_tutorial/features/home/home_screen.dart';
+import 'package:flutter_tutorial/features/login/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'app_router.gr.dart';
