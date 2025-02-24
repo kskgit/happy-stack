@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
+import 'package:flutter_tutorial/features/edit/delete_button.dart';
 import 'package:flutter_tutorial/features/edit/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -145,22 +146,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 notificationTime: _notificationTime,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  // TODO
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryButton,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 100,
-                    vertical: 15,
-                  ),
-                ),
-                child: const Text(
-                  '削除',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+              const DeleteButton(),
             ],
           ),
         ),
