@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/primary_button.dart';
@@ -25,11 +26,18 @@ class SaveButton extends ConsumerWidget {
     return PrimaryButton(
       text: '保存',
       isLading: state.isLoading,
-      onPressed: () => ref
-          .read(
-            saveButtonControllerProvider.notifier,
-          )
-          .create(title, selectedDayOfWeek, notificationTime),
+      onPressed: () async {
+        await ref
+            .read(
+              saveButtonControllerProvider.notifier,
+            )
+            .create(
+              title,
+              selectedDayOfWeek,
+              notificationTime,
+              context.router,
+            );
+      },
     );
   }
 }

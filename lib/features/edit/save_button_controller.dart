@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -16,6 +18,7 @@ class SaveButtonController extends _$SaveButtonController {
     String title,
     List<SelectedDayOfWeek> selectedDayOfWeek,
     TimeOfDay notificationTime,
+    StackRouter router,
   ) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
@@ -25,6 +28,7 @@ class SaveButtonController extends _$SaveButtonController {
         'day_of_week': selectedDayOfWeek,
         'notification_time': _timeToString(notificationTime),
       });
+      await router.push(const HomeRoute());
     });
   }
 }
