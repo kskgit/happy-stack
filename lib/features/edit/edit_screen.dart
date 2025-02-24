@@ -4,7 +4,6 @@ import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/edit/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum DayOfWeek {
   monday(displayValue: '月'),
@@ -168,22 +167,4 @@ class _EditScreenState extends ConsumerState<EditScreen> {
       ),
     );
   }
-}
-
-// APIにデータを送信する関数を追加
-Future<void> _sendDataToApi(
-  String title,
-  List<SelectedDayOfWeek> selectedDayOfWeek,
-  TimeOfDay notificationTime,
-) async {
-  final supabase = Supabase.instance.client;
-  await supabase.from('stocks').insert({
-    'name': title,
-    'day_of_week': selectedDayOfWeek,
-    'notification_time': _timeToString(notificationTime),
-  });
-}
-
-String _timeToString(TimeOfDay time) {
-  return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
 }
