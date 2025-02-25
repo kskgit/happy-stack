@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/primary_button.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 import 'package:flutter_tutorial/features/edit/save_button_controller.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 
 class SaveButton extends ConsumerWidget {
   const SaveButton({
@@ -35,8 +36,10 @@ class SaveButton extends ConsumerWidget {
               title,
               selectedDayOfWeek,
               notificationTime,
-              context.router,
             );
+        if (context.mounted) {
+          await context.router.push(const HomeRoute());
+        }
       },
     );
   }

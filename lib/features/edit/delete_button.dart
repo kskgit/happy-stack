@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/secondary_button.dart';
 import 'package:flutter_tutorial/features/edit/delete_button_controller.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 
 class DeleteButton extends ConsumerWidget {
   const DeleteButton({
@@ -16,9 +17,10 @@ class DeleteButton extends ConsumerWidget {
       text: '削除',
       isLading: asyncValue.isLoading,
       onPressed: () async {
-        await ref
-            .read(deleteButtonControllerProvider.notifier)
-            .delete(context.router);
+        await ref.read(deleteButtonControllerProvider.notifier).delete();
+        if (context.mounted) {
+          await context.router.push(const HomeRoute());
+        }
       },
     );
   }
