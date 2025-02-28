@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tutorial/features/edit/day_view_state.dart';
+import 'package:flutter_tutorial/features/home/day_view_state.dart';
 
 class DayView extends ConsumerWidget {
   const DayView({super.key});

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/features/edit/day_view.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
+import 'package:flutter_tutorial/features/home/day_view.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
