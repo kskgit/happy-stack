@@ -1,7 +1,7 @@
 // time_picker_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
-import 'package:flutter_tutorial/features/edit/time_state.dart';
+import 'package:flutter_tutorial/features/edit/time_picker/time_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TimePickerWidget extends HookConsumerWidget {

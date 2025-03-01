@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
-import 'package:flutter_tutorial/features/edit/delete_button.dart';
-import 'package:flutter_tutorial/features/edit/save_button.dart';
-import 'package:flutter_tutorial/features/edit/time_picker.dart';
+import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
+import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
+import 'package:flutter_tutorial/features/edit/time_picker/time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum DayOfWeek {
