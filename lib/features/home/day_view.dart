@@ -11,23 +11,15 @@ class DayView extends ConsumerWidget {
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) =>
               Center(child: Text('エラーが発生しました: $error')),
-          data: (data) => ListView(
+          data: (happinessList) => ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              EventCard(
-                icon: Icons.emoji_emotions,
-                text: data.toString(),
-                iconBgColor: Colors.orange,
-              ),
-              const EventCard(
-                icon: Icons.coffee,
-                text: '朝からハンドドリップでコーヒー淹れる',
-                iconBgColor: Colors.brown,
-              ),
-              const EventCard(
-                icon: Icons.favorite,
-                text: 'あああああああああああああああああああああああああ・・・',
-                iconBgColor: Colors.red,
+              ...happinessList.map(
+                (happiness) => EventCard(
+                  icon: Icons.emoji_emotions,
+                  text: happiness.name,
+                  iconBgColor: Colors.orange,
+                ),
               ),
             ],
           ),
