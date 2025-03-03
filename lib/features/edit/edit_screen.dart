@@ -43,10 +43,18 @@ class EditScreen extends ConsumerStatefulWidget {
 }
 
 class _EditScreenState extends ConsumerState<EditScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
   String _title = '';
   final List<SelectedDayOfWeek> _selectedDays =
       DayOfWeek.values.map((day) => SelectedDayOfWeek(dayOfWeek: day)).toList();
   TimeOfDay _notificationTime = TimeOfDay.now();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,76 +70,89 @@ class _EditScreenState extends ConsumerState<EditScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TitleTextField(
-                onChanged: (value) {
-                  setState(() {
-                    _title = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 30),
-              const Row(
-                children: [
-                  Text(
-                    '曜日',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              ToggleButtons(
-                isSelected: _selectedDays.map((day) => day.isSelected).toList(),
-                onPressed: (int index) {
-                  setState(() {
-                    _selectedDays[index].isSelected =
-                        !_selectedDays[index].isSelected;
-                  });
-                },
-                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                color: AppColors.secondary,
-                selectedColor: AppColors.primary,
-                borderRadius: BorderRadius.circular(10),
-                children: _selectedDays
-                    .map(
-                      (day) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Text(
-                          day.dayOfWeek.displayValue,
-                          style: const TextStyle(fontSize: 16),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TitleTextField(
+                  controller: _titleController,
+                  onChanged: (value) {
+                    setState(() {
+                      _title = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 30),
+                const Row(
+                  children: [
+                    Text(
+                      '曜日',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                ToggleButtons(
+                  isSelected:
+                      _selectedDays.map((day) => day.isSelected).toList(),
+                  onPressed: (int index) {
+                    setState(() {
+                      _selectedDays[index].isSelected =
+                          !_selectedDays[index].isSelected;
+                    });
+                  },
+                  constraints:
+                      const BoxConstraints(minWidth: 40, minHeight: 40),
+                  color: AppColors.secondary,
+                  selectedColor: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                  children: _selectedDays
+                      .map(
+                        (day) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            day.dayOfWeek.displayValue,
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         ),
-                      ),
-                    )
-                    .toList(),
-              ),
-              const SizedBox(height: 30),
-              const Row(
-                children: [
-                  Text(
-                    '通知時間',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              TimePickerWidget(
-                onTimeSelected: (TimeOfDay selectedTime) {
-                  setState(() {
-                    _notificationTime = selectedTime;
-                  });
-                },
-              ),
-              const SizedBox(height: 50),
-              SaveButton(
-                title: _title,
-                selectedDayOfWeek: _selectedDays,
-                notificationTime: _notificationTime,
-              ),
-              const SizedBox(height: 20),
-              const DeleteButton(),
-            ],
+                      )
+                      .toList(),
+                ),
+                const SizedBox(height: 30),
+                const Row(
+                  children: [
+                    Text(
+                      '通知時間',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                TimePickerWidget(
+                  onTimeSelected: (TimeOfDay selectedTime) {
+                    setState(() {
+                      _notificationTime = selectedTime;
+                    });
+                  },
+                ),
+                const SizedBox(height: 50),
+                SaveButton(
+                  title: _title,
+                  selectedDayOfWeek: _selectedDays,
+                  notificationTime: _notificationTime,
+                  isValid: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      // フォームが有効な場合のみ保存処理を実行
+                      return true;
+                    }
+                    return false;
+                  },
+                ),
+                const SizedBox(height: 20),
+                const DeleteButton(),
+              ],
+            ),
           ),
         ),
       ),

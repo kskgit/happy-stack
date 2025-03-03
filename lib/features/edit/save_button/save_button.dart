@@ -12,12 +12,14 @@ class SaveButton extends ConsumerWidget {
     required this.title,
     required this.selectedDayOfWeek,
     required this.notificationTime,
+    required this.isValid,
     super.key,
   });
 
   final String title;
   final List<SelectedDayOfWeek> selectedDayOfWeek;
   final TimeOfDay notificationTime;
+  final bool Function() isValid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,6 +30,10 @@ class SaveButton extends ConsumerWidget {
       text: '保存',
       isLading: state.isLoading,
       onPressed: () async {
+        if (!isValid()) {
+          return;
+        }
+
         await ref
             .read(
               saveButtonControllerProvider.notifier,

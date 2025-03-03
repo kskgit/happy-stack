@@ -4,9 +4,11 @@ class TitleTextField extends StatelessWidget {
   const TitleTextField({
     required this.onChanged,
     super.key,
+    this.controller,
   });
 
   final void Function(String) onChanged;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +21,21 @@ class TitleTextField extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: TextField(
+          child: TextFormField(
+            controller: controller,
             decoration: const InputDecoration(
               labelText: 'タイトル',
               hintText: 'アニメを見る',
               border: UnderlineInputBorder(),
             ),
             onChanged: onChanged,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'タイトルを入力してください';
+              }
+              return null;
+            },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
         ),
       ],
