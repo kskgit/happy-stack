@@ -44,17 +44,10 @@ class EditScreen extends ConsumerStatefulWidget {
 
 class _EditScreenState extends ConsumerState<EditScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
   String _title = '';
   final List<SelectedDayOfWeek> _selectedDays =
       DayOfWeek.values.map((day) => SelectedDayOfWeek(dayOfWeek: day)).toList();
   TimeOfDay _notificationTime = TimeOfDay.now();
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +69,6 @@ class _EditScreenState extends ConsumerState<EditScreen> {
             child: Column(
               children: [
                 TitleTextField(
-                  controller: _titleController,
                   onChanged: (value) {
                     setState(() {
                       _title = value;
