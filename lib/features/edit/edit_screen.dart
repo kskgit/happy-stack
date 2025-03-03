@@ -4,6 +4,7 @@ import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker/time_picker.dart';
+import 'package:flutter_tutorial/features/edit/title_text_field/title_text_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum DayOfWeek {
@@ -64,29 +65,12 @@ class _EditScreenState extends ConsumerState<EditScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.lightbulb,
-                    size: 50,
-                    color: Colors.orange,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'タイトル',
-                        hintText: 'アニメを見る',
-                        border: UnderlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _title = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+              TitleTextField(
+                onChanged: (value) {
+                  setState(() {
+                    _title = value;
+                  });
+                },
               ),
               const SizedBox(height: 30),
               const Row(

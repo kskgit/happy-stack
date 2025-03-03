@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
           bottom: const TabBar(
             isScrollable: true,
             tabs: [
+              // TODODayOfWeekを利用する
               Tab(text: '月'),
               Tab(text: '火'),
               Tab(text: '水'),
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
+          // TODODayOfWeekの数だけループする
           children: [
             DayView(),
             DayView(),
