@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/edit/day_of_week_toggle_button.dart';
 import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker/time_picker.dart';
-import 'package:flutter_tutorial/features/edit/title_text_field/title_text_field.dart';
+import 'package:flutter_tutorial/features/edit/title_text_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-enum DayOfWeek {
-  monday(displayValue: '月'),
-  tuesday(displayValue: '火'),
-  wednesday(displayValue: '水'),
-  thursday(displayValue: '木'),
-  friday(displayValue: '金'),
-  saturday(displayValue: '土'),
-  sunday(displayValue: '日');
-
-  const DayOfWeek({required this.displayValue});
-
-  final String displayValue;
-}
 
 class SelectedDayOfWeek {
   SelectedDayOfWeek({
