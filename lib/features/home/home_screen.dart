@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 import 'package:flutter_tutorial/features/home/day_view.dart';
 
@@ -14,31 +15,17 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('トップページ'),
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: true,
-            tabs: [
-              // TODODayOfWeekを利用する
-              Tab(text: '月'),
-              Tab(text: '火'),
-              Tab(text: '水'),
-              Tab(text: '木'),
-              Tab(text: '金'),
-              Tab(text: '土'),
-              Tab(text: '日'),
-            ],
+            tabs: DayOfWeek.values
+                .map((data) => Text(data.displayValue))
+                .toList(),
           ),
         ),
-        body: const TabBarView(
-          // TODODayOfWeekの数だけループする
-          children: [
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-            DayView(),
-          ],
+        body: TabBarView(
+          children:
+              // TODODayViewに曜日を渡す
+              DayOfWeek.values.map((data) => const DayView()).toList(),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
