@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
+import 'package:flutter_tutorial/features/edit/day_of_week_toggle_button.dart';
 import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker/time_picker.dart';
@@ -85,31 +86,14 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                ToggleButtons(
-                  isSelected:
-                      _selectedDays.map((day) => day.isSelected).toList(),
+                DayOfWeekToggleButton(
+                  selectedDays: _selectedDays,
                   onPressed: (int index) {
                     setState(() {
                       _selectedDays[index].isSelected =
                           !_selectedDays[index].isSelected;
                     });
                   },
-                  constraints:
-                      const BoxConstraints(minWidth: 40, minHeight: 40),
-                  color: AppColors.secondary,
-                  selectedColor: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10),
-                  children: _selectedDays
-                      .map(
-                        (day) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
-                            day.dayOfWeek.displayValue,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      )
-                      .toList(),
                 ),
                 const SizedBox(height: 30),
                 const Row(
@@ -135,7 +119,6 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   notificationTime: _notificationTime,
                   isValid: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      // フォームが有効な場合のみ保存処理を実行
                       return true;
                     }
                     return false;
