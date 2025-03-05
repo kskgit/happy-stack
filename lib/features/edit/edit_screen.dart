@@ -30,6 +30,37 @@ class EditScreen extends ConsumerStatefulWidget {
   ConsumerState<EditScreen> createState() => _EditScreenState();
 }
 
+class DayOfWeekFormField extends FormField<List<SelectedDayOfWeek>> {
+  DayOfWeekFormField({
+    required List<SelectedDayOfWeek> selectedDays,
+    required FormFieldSetter<List<SelectedDayOfWeek>> super.onSaved,
+    required FormFieldValidator<List<SelectedDayOfWeek>> super.validator,
+    super.key,
+  }) : super(
+          initialValue: selectedDays,
+          builder: (FormFieldState<List<SelectedDayOfWeek>> state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DayOfWeekToggleButton(
+                  selectedDays: state.value!,
+                  onPressed: (int index) {
+                    state.value![index].isSelected =
+                        !state.value![index].isSelected;
+                    state.didChange(state.value);
+                  },
+                ),
+                if (state.hasError)
+                  Text(
+                    state.errorText!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+              ],
+            );
+          },
+        );
+}
+
 class _EditScreenState extends ConsumerState<EditScreen> {
   final _formKey = GlobalKey<FormState>();
   String _title = '';
@@ -73,13 +104,17 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                DayOfWeekToggleButton(
+                DayOfWeekFormField(
                   selectedDays: _selectedDays,
-                  onPressed: (int index) {
-                    setState(() {
-                      _selectedDays[index].isSelected =
-                          !_selectedDays[index].isSelected;
-                    });
+                  onSaved: (value) {
+                    _selectedDays.clear();
+                    _selectedDays.addAll(value!);
+                  },
+                  validator: (value) {
+                    if (value == null || !value.any((day) => day.isSelected)) {
+                      return '少なくとも1つの曜日を選択してください';
+                    }
+                    return null;
                   },
                 ),
                 const SizedBox(height: 30),
