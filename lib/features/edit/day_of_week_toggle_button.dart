@@ -2,11 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 
-class DayOfWeekToggleButton extends StatelessWidget {
-  const DayOfWeekToggleButton({
+class DayOfWeekFormField extends FormField<List<SelectedDayOfWeek>> {
+  DayOfWeekFormField({
+    required List<SelectedDayOfWeek> selectedDays,
+    super.key,
+  }) : super(
+          initialValue: selectedDays,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) => (value?.any((day) => day.isSelected) ?? false)
+              ? null
+              : '曜日を1つ以上選択してください',
+          builder: (state) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _DayOfWeekToggleButton(
+                selectedDays: state.value!,
+                onPressed: (index) {
+                  final newSelectedDays =
+                      List<SelectedDayOfWeek>.from(state.value!);
+                  newSelectedDays[index].isSelected =
+                      !newSelectedDays[index].isSelected;
+                  state.didChange(newSelectedDays);
+                },
+              ),
+              if (state.hasError)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    state.errorText!,
+                    style: const TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
+            ],
+          ),
+        );
+}
+
+class _DayOfWeekToggleButton extends StatelessWidget {
+  const _DayOfWeekToggleButton({
     required this.selectedDays,
     required this.onPressed,
-    super.key,
   });
   final List<SelectedDayOfWeek> selectedDays;
   final void Function(int) onPressed;
