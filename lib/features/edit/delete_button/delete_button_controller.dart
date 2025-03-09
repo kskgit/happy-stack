@@ -15,6 +15,7 @@ class DeleteButtonController extends _$DeleteButtonController {
     state = await AsyncValue.guard(() async {
       final supabase = Supabase.instance.client;
       // TODO: 削除処理の実装
+      // await supabase.from('stocks').delete().eq('id', 1);
       await Future.delayed(const Duration(seconds: 1));
     });
   }

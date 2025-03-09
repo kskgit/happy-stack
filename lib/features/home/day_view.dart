@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/features/home/day_view_state.dart';
+import 'package:flutter_tutorial/features/home/event_card.dart';
 
 class DayView extends ConsumerWidget {
   const DayView({super.key});
@@ -16,41 +17,11 @@ class DayView extends ConsumerWidget {
             children: [
               ...happinessList.map(
                 (happiness) => EventCard(
-                  icon: Icons.emoji_emotions,
-                  text: happiness.name,
-                  iconBgColor: Colors.orange,
+                  happiness: happiness,
                 ),
               ),
             ],
           ),
         );
-  }
-}
-
-class EventCard extends StatelessWidget {
-  const EventCard({
-    required this.icon,
-    required this.text,
-    required this.iconBgColor,
-    super.key,
-  });
-  final IconData icon;
-  final String text;
-  final Color iconBgColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: iconBgColor,
-          child: Icon(icon, color: Colors.white),
-        ),
-        title: Text(text),
-      ),
-    );
   }
 }
