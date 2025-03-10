@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
-import 'package:flutter_tutorial/features/home/day_view.dart';
+import 'package:flutter_tutorial/features/home/daily_list.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         body: TabBarView(
           children:
               // TODODayViewに曜日を渡す
-              DayOfWeek.values.map((data) => const DayView()).toList(),
+              DayOfWeek.values.map((data) => const DailyList()).toList(),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

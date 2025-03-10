@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tutorial/features/home/day_view_state.dart';
+import 'package:flutter_tutorial/features/home/daily_list_state.dart';
 import 'package:flutter_tutorial/features/home/event_card.dart';
 
-class DayView extends ConsumerWidget {
-  const DayView({super.key});
+class DailyList extends ConsumerWidget {
+  const DailyList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(dayViewStateProvider).when(
+    return ref.watch(dailyListStateProvider).when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) =>
               Center(child: Text('エラーが発生しました: $error')),

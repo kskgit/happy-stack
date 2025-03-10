@@ -6,10 +6,10 @@ import 'package:flutter_tutorial/features/home/domain/happiness.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'day_view_state.g.dart';
+part 'daily_list_state.g.dart';
 
 @riverpod
-Future<List<Happiness>> dayViewState(Ref ref) async {
+Future<List<Happiness>> dailyListState(Ref ref) async {
   final supabase = Supabase.instance.client;
   final response = await supabase.from('stocks').select();
 
