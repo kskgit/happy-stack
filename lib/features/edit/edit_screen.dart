@@ -26,7 +26,8 @@ class SelectedDayOfWeek {
 
 @RoutePage()
 class EditScreen extends ConsumerStatefulWidget {
-  const EditScreen({super.key});
+  const EditScreen({@queryParam this.happinessId, super.key});
+  final int? happinessId;
 
   @override
   ConsumerState<EditScreen> createState() => _EditScreenState();

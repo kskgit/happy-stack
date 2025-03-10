@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 import 'package:flutter_tutorial/features/home/home_screen.dart';
 import 'package:flutter_tutorial/features/login/login_screen.dart';
@@ -12,7 +13,11 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: LoginRoute.page),
         AutoRoute(page: HomeRoute.page, guards: [AuthGuard()], initial: true),
-        AutoRoute(page: EditRoute.page, guards: [AuthGuard()]),
+        AutoRoute(
+          page: EditRoute.page,
+          guards: [AuthGuard()],
+          path: '/edit/:happinessId?',
+        ),
       ];
   @override
   RouteType get defaultRouteType => const RouteType.material();
