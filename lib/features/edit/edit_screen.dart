@@ -5,9 +5,11 @@ import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/edit/day_of_week_toggle_button.dart';
 import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
+import 'package:flutter_tutorial/features/edit/edit_screen_controller.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker/time_picker.dart';
 import 'package:flutter_tutorial/features/edit/title_text_field.dart';
+import 'package:flutter_tutorial/features/home/domain/happiness.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SelectedDayOfWeek {
@@ -42,6 +44,24 @@ class _EditScreenState extends ConsumerState<EditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    late final AsyncValue<Happiness> happiness;
+
+    if (widget.happinessId != null) {
+      happiness = ref.watch(happinessDetailStateProvider(widget.happinessId!));
+      return happiness.when(
+        loading: CircularProgressIndicator.new,
+        error: (error, stackTrace) => Center(child: Text('エラーが発生しました: $error')),
+        data: (data) {
+          _title = data.name;
+          return _build();
+        },
+      );
+    } else {
+      return _build();
+    }
+  }
+
+  Scaffold _build() {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
