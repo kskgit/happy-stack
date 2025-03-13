@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class TitleTextField extends StatelessWidget {
   const TitleTextField({
     required this.onChanged,
+    this.initialValue,
     super.key,
   });
 
   final void Function(String) onChanged;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class TitleTextField extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: TextFormField(
+            initialValue: initialValue,
             decoration: const InputDecoration(
               labelText: 'タイトル',
               hintText: 'アニメを見る',

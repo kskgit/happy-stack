@@ -42,6 +42,17 @@ class _EditScreenState extends ConsumerState<EditScreen> {
       DayOfWeek.values.map((day) => SelectedDayOfWeek(dayOfWeek: day)).toList();
   TimeOfDay _notificationTime = TimeOfDay.now();
 
+  // 文字列からTimeOfDayに変換するヘルパーメソッド
+  TimeOfDay _parseTimeOfDay(String timeString) {
+    final parts = timeString.split(':');
+    if (parts.length == 2) {
+      final hour = int.tryParse(parts[0]) ?? 0;
+      final minute = int.tryParse(parts[1]) ?? 0;
+      return TimeOfDay(hour: hour, minute: minute);
+    }
+    return TimeOfDay.now();
+  }
+
   @override
   Widget build(BuildContext context) {
     late final AsyncValue<Happiness> happiness;
@@ -53,6 +64,8 @@ class _EditScreenState extends ConsumerState<EditScreen> {
         error: (error, stackTrace) => Center(child: Text('エラーが発生しました: $error')),
         data: (data) {
           _title = data.name;
+          // notificationTimeを設定
+          _notificationTime = _parseTimeOfDay(data.notificationTime);
           return _build();
         },
       );
@@ -80,6 +93,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
             child: Column(
               children: [
                 TitleTextField(
+                  initialValue: _title,
                   onChanged: (value) {
                     setState(() {
                       _title = value;
@@ -110,6 +124,9 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 ),
                 const SizedBox(height: 10),
                 TimePickerWidget(
+                  initialTime: widget.happinessId != null
+                      ? _notificationTime.format(context)
+                      : null,
                   onTimeSelected: (TimeOfDay selectedTime) {
                     setState(() {
                       _notificationTime = selectedTime;
