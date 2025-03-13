@@ -16,13 +16,7 @@ Future<List<Happiness>> dailyListState(Ref ref) async {
   // Supabaseから取得したデータをHappinessクラスのリストに変換
   return (response as List)
       .map(
-        (item) => Happiness(
-          id: item['id'] as int,
-          name: item['name'] as String,
-          dayOfWeek: item['day_of_week'] as String,
-          notificationTime: item['notification_time'] as String,
-          createdAt: DateTime.parse(item['created_at'] as String),
-        ),
+        (item) => Happiness.fromJson(item as Map<String, dynamic>),
       )
       .toList();
 }
