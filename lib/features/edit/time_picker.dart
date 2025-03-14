@@ -1,7 +1,6 @@
 // time_picker_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
-import 'package:flutter_tutorial/features/edit/time_picker/time_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TimePickerWidget extends HookConsumerWidget {
@@ -15,7 +14,7 @@ class TimePickerWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedTime = ref.watch(timeStateProvider);
+    final selectedTime = initialTime ?? TimeOfDay.now();
 
     Future<void> selectTime() async {
       final picked = await showTimePicker(
@@ -24,7 +23,6 @@ class TimePickerWidget extends HookConsumerWidget {
       );
 
       if (picked != null && picked != selectedTime) {
-        ref.read(timeStateProvider.notifier).updateTime(picked);
         onTimeSelected(picked);
       }
     }
@@ -32,9 +30,16 @@ class TimePickerWidget extends HookConsumerWidget {
     return TextButton(
       onPressed: selectTime,
       child: Text(
-        ref.read(timeStateProvider.notifier).getFormattedTime(),
+        _getFormattedTime(selectedTime),
         style: const TextStyle(fontSize: 22, color: AppColors.text),
       ),
     );
   }
+}
+
+// hh:mm形式で時刻を返却
+String _getFormattedTime(TimeOfDay target) {
+  final hour = target.hour.toString().padLeft(2, '0');
+  final minute = target.minute.toString().padLeft(2, '0');
+  return '$hour:$minute';
 }

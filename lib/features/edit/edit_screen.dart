@@ -7,7 +7,7 @@ import 'package:flutter_tutorial/features/edit/day_of_week_toggle_button.dart';
 import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen_controller.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
-import 'package:flutter_tutorial/features/edit/time_picker/time_picker.dart';
+import 'package:flutter_tutorial/features/edit/time_picker.dart';
 import 'package:flutter_tutorial/features/edit/title_text_field.dart';
 import 'package:flutter_tutorial/features/home/domain/happiness.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
