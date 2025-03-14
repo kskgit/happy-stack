@@ -6,9 +6,11 @@ import 'package:flutter_tutorial/features/edit/delete_button/delete_button_contr
 import 'package:flutter_tutorial/routing/app_router.dart';
 
 class DeleteButton extends ConsumerWidget {
-  const DeleteButton({
+  const DeleteButton(
+    this.happinessId, {
     super.key,
   });
+  final int happinessId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,7 +19,9 @@ class DeleteButton extends ConsumerWidget {
       text: '削除',
       isLading: asyncValue.isLoading,
       onPressed: () async {
-        await ref.read(deleteButtonControllerProvider.notifier).delete();
+        await ref
+            .read(deleteButtonControllerProvider.notifier)
+            .delete(happinessId);
         if (context.mounted) {
           await context.router.push(const HomeRoute());
         }
