@@ -133,7 +133,8 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                const DeleteButton(),
+                if (widget.happinessId != null)
+                  DeleteButton(widget.happinessId!),
               ],
             ),
           ),
