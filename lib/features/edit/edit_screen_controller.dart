@@ -9,6 +9,6 @@ part 'edit_screen_controller.g.dart';
 Future<Happiness> happinessDetailState(Ref ref, int happinessId) async {
   final supabase = Supabase.instance.client;
   final response =
-      await supabase.from('stocks').select().eq('id', happinessId).single();
+      await supabase.from('happiness').select().eq('id', happinessId).single();
   return Happiness.fromJson(response);
 }

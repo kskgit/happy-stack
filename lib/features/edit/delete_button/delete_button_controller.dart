@@ -14,7 +14,7 @@ class DeleteButtonController extends _$DeleteButtonController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final supabase = Supabase.instance.client;
-      await supabase.from('stocks').delete().eq('id', happinessId);
+      await supabase.from('happiness').delete().eq('id', happinessId);
     });
   }
 }

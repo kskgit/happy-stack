@@ -20,15 +20,17 @@ class SaveButtonController extends _$SaveButtonController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final supabase = Supabase.instance.client;
-      await supabase.from('stocks').insert({
+      await supabase.from('happiness').insert({
         'name': title,
         'day_of_week': selectedDayOfWeek,
         'notification_time': _timeToString(notificationTime),
       });
     });
   }
-}
 
-String _timeToString(TimeOfDay time) {
-  return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+  String _timeToString(TimeOfDay time) {
+    // 改行した方が見づらいため
+    // ignore: lines_longer_than_80_chars
+    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+  }
 }
