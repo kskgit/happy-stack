@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -14,7 +13,7 @@ class SaveButtonController extends _$SaveButtonController {
 
   Future<void> create(
     String title,
-    List<SelectedDayOfWeek> selectedDayOfWeek,
+    int selectedDayOfWeek,
     TimeOfDay notificationTime,
   ) async {
     state = const AsyncLoading();

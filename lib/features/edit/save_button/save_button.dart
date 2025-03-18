@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/primary_button.dart';
-import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button_controller.dart';
 import 'package:flutter_tutorial/routing/app_router.dart';
 
@@ -17,7 +16,7 @@ class SaveButton extends ConsumerWidget {
   });
 
   final String title;
-  final List<SelectedDayOfWeek> selectedDayOfWeek;
+  final int selectedDayOfWeek;
   final TimeOfDay notificationTime;
   final bool Function() isValid;
 

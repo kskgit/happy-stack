@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
-import 'package:flutter_tutorial/features/edit/edit_screen.dart';
 
-class DayOfWeekFormField extends FormField<List<SelectedDayOfWeek>> {
+class DayOfWeekFormField extends FormField<int> {
   DayOfWeekFormField({
-    required List<SelectedDayOfWeek> selectedDays,
+    required int selectedDays,
     super.key,
   }) : super(
           initialValue: selectedDays,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => (value?.any((day) => day.isSelected) ?? false)
-              ? null
-              : '曜日を1つ以上選択してください',
+          validator: (value) => (value != null) ? null : '曜日を1つ以上選択してください',
           builder: (state) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _DayOfWeekToggleButton(
                 selectedDays: state.value!,
                 onPressed: (index) {
-                  final newSelectedDays =
-                      List<SelectedDayOfWeek>.from(state.value!);
-                  newSelectedDays[index].isSelected =
-                      !newSelectedDays[index].isSelected;
-                  state.didChange(newSelectedDays);
+                  // todo どうなるか分からないため固定値
+                  // const newSelectedDays = 1;
+                  print(index);
+                  state
+                      .didChange(selectedDays += DayOfWeek.values[index].value);
+                  print(selectedDays);
                 },
               ),
               if (state.hasError)
@@ -43,24 +42,26 @@ class _DayOfWeekToggleButton extends StatelessWidget {
     required this.selectedDays,
     required this.onPressed,
   });
-  final List<SelectedDayOfWeek> selectedDays;
+  final int selectedDays;
   final void Function(int) onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
-      isSelected: selectedDays.map((day) => day.isSelected).toList(),
+      isSelected: DayOfWeek.values
+          .map((day) => (day.value & selectedDays) != 0)
+          .toList(),
       onPressed: onPressed,
       constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
       color: AppColors.secondary,
       selectedColor: AppColors.primary,
       borderRadius: BorderRadius.circular(10),
-      children: selectedDays
+      children: DayOfWeek.values
           .map(
             (day) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
-                day.dayOfWeek.displayValue,
+                day.displayValue,
                 style: const TextStyle(fontSize: 16),
               ),
             ),

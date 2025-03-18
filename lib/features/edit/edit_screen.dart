@@ -38,8 +38,8 @@ class EditScreen extends ConsumerStatefulWidget {
 class _EditScreenState extends ConsumerState<EditScreen> {
   final _formKey = GlobalKey<FormState>();
   String _title = '';
-  final List<SelectedDayOfWeek> _selectedDays =
-      DayOfWeek.values.map((day) => SelectedDayOfWeek(dayOfWeek: day)).toList();
+  final int _selectedDays = 0;
+
   TimeOfDay _notificationTime = TimeOfDay.now();
 
   @override
@@ -53,6 +53,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
         error: (error, stackTrace) => Center(child: Text('エラーが発生しました: $error')),
         data: (data) {
           _title = data.name;
+          // todo 曜日の初期化
           // notificationTimeを設定
           _notificationTime = data.notificationTime;
           return _build();
