@@ -16,12 +16,7 @@ class DayOfWeekFormField extends FormField<int> {
               _DayOfWeekToggleButton(
                 selectedDays: state.value!,
                 onPressed: (index) {
-                  // todo どうなるか分からないため固定値
-                  // const newSelectedDays = 1;
-                  print(index);
-                  state
-                      .didChange(selectedDays += DayOfWeek.values[index].value);
-                  print(selectedDays);
+                  state.didChange(state.value! ^ DayOfWeek.values[index].value);
                 },
               ),
               if (state.hasError)
