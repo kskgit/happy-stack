@@ -6,17 +6,22 @@ class DayOfWeekFormField extends FormField<int> {
   DayOfWeekFormField({
     required int selectedDays,
     super.key,
+    ValueChanged<int>? onChanged,
   }) : super(
           initialValue: selectedDays,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => (value != null) ? null : '曜日を1つ以上選択してください',
+          validator: (value) => (value != 0) ? null : '曜日を1つ以上選択してください',
           builder: (state) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _DayOfWeekToggleButton(
                 selectedDays: state.value!,
                 onPressed: (index) {
-                  state.didChange(state.value! ^ DayOfWeek.values[index].value);
+                  final newValue = state.value! ^ DayOfWeek.values[index].value;
+                  state.didChange(newValue);
+                  if (onChanged != null) {
+                    onChanged(newValue);
+                  }
                 },
               ),
               if (state.hasError)

@@ -24,7 +24,7 @@ sealed class Happiness with _$Happiness {
   const factory Happiness({
     required int id,
     required String name,
-    @JsonKey(name: 'day_of_week') required String dayOfWeek,
+    @JsonKey(name: 'day_of_week') required int dayOfWeek,
     @JsonKey(
       name: 'notification_time',
       fromJson: _timeFromJson,

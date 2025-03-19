@@ -38,7 +38,7 @@ class EditScreen extends ConsumerStatefulWidget {
 class _EditScreenState extends ConsumerState<EditScreen> {
   final _formKey = GlobalKey<FormState>();
   String _title = '';
-  final int _selectedDays = 0;
+  int _selectedDays = 0;
 
   TimeOfDay _notificationTime = TimeOfDay.now();
 
@@ -102,6 +102,11 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 const SizedBox(height: 10),
                 DayOfWeekFormField(
                   selectedDays: _selectedDays,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedDays = value;
+                    });
+                  },
                 ),
                 const SizedBox(height: 30),
                 const Row(
