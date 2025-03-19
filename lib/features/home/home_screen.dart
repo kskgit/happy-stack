@@ -25,7 +25,13 @@ class HomeScreen extends StatelessWidget {
         body: TabBarView(
           children:
               // TODODayViewに曜日を渡す
-              DayOfWeek.values.map((data) => const DailyList()).toList(),
+              DayOfWeek.values
+                  .map(
+                    (data) => DailyList(
+                      dayOfWeek: data,
+                    ),
+                  )
+                  .toList(),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
