@@ -53,8 +53,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
         error: (error, stackTrace) => Center(child: Text('エラーが発生しました: $error')),
         data: (data) {
           _title = data.name;
-          // todo 曜日の初期化
-          // notificationTimeを設定
+          _selectedDays = data.dayOfWeek;
           _notificationTime = data.notificationTime;
           return _build();
         },
