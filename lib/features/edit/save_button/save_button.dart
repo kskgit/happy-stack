@@ -6,7 +6,8 @@ import 'package:flutter_tutorial/features/edit/save_button/save_button_controlle
 import 'package:flutter_tutorial/routing/app_router.dart';
 
 class SaveButton extends ConsumerWidget {
-  const SaveButton({
+  const SaveButton(
+    this.happinessId, {
     // todo 値の受け渡しをriverpod経由で検討する
     required this.title,
     required this.selectedDayOfWeek,
@@ -15,6 +16,7 @@ class SaveButton extends ConsumerWidget {
     super.key,
   });
 
+  final int? happinessId;
   final String title;
   final int selectedDayOfWeek;
   final TimeOfDay notificationTime;
@@ -32,18 +34,33 @@ class SaveButton extends ConsumerWidget {
         if (!isValid()) {
           return;
         }
-
-        await ref
-            .read(
-              saveButtonControllerProvider.notifier,
-            )
-            .create(
-              title,
-              selectedDayOfWeek,
-              notificationTime,
-            );
-        if (context.mounted) {
-          await context.router.push(const HomeRoute());
+        if (happinessId == null) {
+          await ref
+              .read(
+                saveButtonControllerProvider.notifier,
+              )
+              .create(
+                title,
+                selectedDayOfWeek,
+                notificationTime,
+              );
+          if (context.mounted) {
+            await context.router.push(const HomeRoute());
+          }
+        } else {
+          await ref
+              .read(
+                saveButtonControllerProvider.notifier,
+              )
+              .update(
+                happinessId: happinessId!,
+                title: title,
+                selectedDayOfWeek: selectedDayOfWeek,
+                notificationTime: notificationTime,
+              );
+          if (context.mounted) {
+            await context.router.push(const HomeRoute());
+          }
         }
       },
     );

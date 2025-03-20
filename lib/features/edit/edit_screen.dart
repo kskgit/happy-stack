@@ -127,6 +127,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 ),
                 const SizedBox(height: 50),
                 SaveButton(
+                  widget.happinessId,
                   title: _title,
                   selectedDayOfWeek: _selectedDays,
                   notificationTime: _notificationTime,
