@@ -46,7 +46,9 @@ class _EditScreenState extends ConsumerState<EditScreen> {
   Widget build(BuildContext context) {
     late final AsyncValue<Happiness> happiness;
 
-    if (widget.happinessId != null) {
+    if (widget.happinessId == null) {
+      return _build();
+    } else {
       happiness = ref.watch(happinessDetailStateProvider(widget.happinessId!));
       return happiness.when(
         loading: CircularProgressIndicator.new,
@@ -58,8 +60,6 @@ class _EditScreenState extends ConsumerState<EditScreen> {
           return _build();
         },
       );
-    } else {
-      return _build();
     }
   }
 
