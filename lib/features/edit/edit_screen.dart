@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/edit/day_of_week_toggle_button.dart';
-import 'package:flutter_tutorial/features/edit/delete_button/delete_button.dart';
 import 'package:flutter_tutorial/features/edit/edit_screen_controller.dart';
 import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
 import 'package:flutter_tutorial/features/edit/time_picker.dart';
@@ -36,7 +35,6 @@ class EditScreen extends ConsumerStatefulWidget {
 }
 
 class _EditScreenState extends ConsumerState<EditScreen> {
-  final _formKey = GlobalKey<FormState>();
   String _title = '';
   int _selectedDays = 0;
 
@@ -47,7 +45,7 @@ class _EditScreenState extends ConsumerState<EditScreen> {
     late final AsyncValue<Happiness> happiness;
 
     if (widget.happinessId == null) {
-      return _build();
+      return const InputForm();
     } else {
       happiness = ref.watch(happinessDetailStateProvider(widget.happinessId!));
       return happiness.when(
@@ -57,13 +55,44 @@ class _EditScreenState extends ConsumerState<EditScreen> {
           _title = data.name;
           _selectedDays = data.dayOfWeek;
           _notificationTime = data.notificationTime;
-          return _build();
+          return InputForm(
+            initialTitle: _title,
+            initialSelectedDayOfWeek: _selectedDays,
+            initialNotificationTime: _notificationTime,
+          );
         },
       );
     }
   }
+}
 
-  Scaffold _build() {
+class InputForm extends StatefulWidget {
+  const InputForm({
+    this.initialTitle,
+    this.initialSelectedDayOfWeek,
+    this.initialNotificationTime,
+    super.key,
+  });
+
+  final String? initialTitle;
+  final int? initialSelectedDayOfWeek;
+  final TimeOfDay? initialNotificationTime;
+
+  @override
+  State<InputForm> createState() {
+    return _InputFormState();
+  }
+}
+
+class _InputFormState extends State<InputForm> {
+  @override
+  Widget build(BuildContext context) {
+    var title = widget.initialTitle ?? '';
+    var selectedDayOfWeek = widget.initialSelectedDayOfWeek ?? 0;
+    var notificationTime = widget.initialNotificationTime ?? TimeOfDay.now();
+    final formKey = GlobalKey<FormState>();
+
+    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -77,15 +106,15 @@ class _EditScreenState extends ConsumerState<EditScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
                 TitleTextField(
-                  initialValue: _title,
+                  initialValue: title,
                   onChanged: (value) {
                     setState(() {
-                      _title = value;
+                      title = value;
                     });
                   },
                 ),
@@ -100,10 +129,10 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 ),
                 const SizedBox(height: 10),
                 DayOfWeekFormField(
-                  selectedDays: _selectedDays,
+                  selectedDays: selectedDayOfWeek,
                   onChanged: (value) {
                     setState(() {
-                      _selectedDays = value;
+                      selectedDayOfWeek = value;
                     });
                   },
                 ),
@@ -118,29 +147,26 @@ class _EditScreenState extends ConsumerState<EditScreen> {
                 ),
                 const SizedBox(height: 10),
                 TimePickerWidget(
-                  initialTime: _notificationTime,
+                  initialTime: notificationTime,
                   onTimeSelected: (TimeOfDay selectedTime) {
                     setState(() {
-                      _notificationTime = selectedTime;
+                      notificationTime = selectedTime;
                     });
                   },
                 ),
                 const SizedBox(height: 50),
-                SaveButton(
-                  widget.happinessId,
-                  title: _title,
-                  selectedDayOfWeek: _selectedDays,
-                  notificationTime: _notificationTime,
+                SubmitButton(
+                  title: title,
+                  selectedDayOfWeek: selectedDayOfWeek,
+                  notificationTime: notificationTime,
                   isValid: () {
-                    if (_formKey.currentState?.validate() ?? false) {
+                    if (formKey.currentState?.validate() ?? false) {
                       return true;
                     }
                     return false;
                   },
                 ),
                 const SizedBox(height: 20),
-                if (widget.happinessId != null)
-                  DeleteButton(widget.happinessId!),
               ],
             ),
           ),
