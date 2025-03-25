@@ -2,28 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'save_button_controller.g.dart';
+part 'update_button_controller.g.dart';
 
 @riverpod
-class SaveButtonController extends _$SaveButtonController {
+class UpdatButtunoCntroller extends _$UpdatButtunoCntroller {
   @override
   AsyncValue<void> build() {
     return const AsyncData(null);
   }
 
-  Future<void> create(
-    String title,
-    int selectedDayOfWeek,
-    TimeOfDay notificationTime,
-  ) async {
+  Future<void> update({
+    required int happinessId,
+    required String title,
+    required int selectedDayOfWeek,
+    required TimeOfDay notificationTime,
+  }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final supabase = Supabase.instance.client;
-      await supabase.from('happiness').insert({
+      await supabase.from('happiness').update({
         'name': title,
         'day_of_week': selectedDayOfWeek,
         'notification_time': _timeToString(notificationTime),
-      });
+      }).eq('id', happinessId);
     });
   }
 
