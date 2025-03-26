@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
-import 'package:flutter_tutorial/features/edit/edit_screen.dart';
+import 'package:flutter_tutorial/features/edit/registration_screen.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
 
 @RoutePage()
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
               builder: (BuildContext context) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 0.9,
-                  child: const EditScreen(),
+                  child: const RegistrationScreen(),
                 );
               },
             );
