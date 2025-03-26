@@ -27,17 +27,25 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
+  late String title;
+  late int selectedDayOfWeek;
+  late TimeOfDay notificationTime;
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    title = widget.initialTitle ?? '';
+    selectedDayOfWeek = widget.initialSelectedDayOfWeek ?? 0;
+    notificationTime = widget.initialNotificationTime ?? TimeOfDay.now();
+  }
+
+  bool isValid() {
+    return formKey.currentState?.validate() ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    var title = widget.initialTitle ?? '';
-    var selectedDayOfWeek = widget.initialSelectedDayOfWeek ?? 0;
-    var notificationTime = widget.initialNotificationTime ?? TimeOfDay.now();
-
-    final formKey = GlobalKey<FormState>();
-    bool isValid() {
-      return formKey.currentState?.validate() ?? false;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
