@@ -32,6 +32,7 @@ class EditScreen extends ConsumerWidget {
       error: (error, stackTrace) => Center(child: Text('エラーが発生しました: $error')),
       data: (data) {
         return InputForm(
+          happinessId: data.id,
           initialTitle: data.name,
           initialSelectedDayOfWeek: data.dayOfWeek,
           initialNotificationTime: data.notificationTime,
