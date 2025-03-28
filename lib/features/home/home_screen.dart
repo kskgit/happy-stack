@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
-import 'package:flutter_tutorial/features/edit/registration_screen.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
+import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {

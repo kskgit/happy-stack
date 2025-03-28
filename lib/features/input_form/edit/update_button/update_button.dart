@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/primary_button.dart';
-import 'package:flutter_tutorial/features/edit/save_button/save_button_controller.dart';
-import 'package:flutter_tutorial/features/edit/update_button/update_button_controller.dart';
+import 'package:flutter_tutorial/features/input_form/edit/update_button/update_button_controller.dart';
+import 'package:flutter_tutorial/features/input_form/registration/save_button/save_button_controller.dart';
 import 'package:flutter_tutorial/routing/app_router.dart';
 
 class UpdateButton extends ConsumerWidget {

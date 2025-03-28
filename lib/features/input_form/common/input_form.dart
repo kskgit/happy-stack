@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/constants/theme.dart';
-import 'package:flutter_tutorial/features/edit/day_of_week_toggle_button.dart';
-import 'package:flutter_tutorial/features/edit/save_button/save_button.dart';
-import 'package:flutter_tutorial/features/edit/time_picker.dart';
-import 'package:flutter_tutorial/features/edit/title_text_field.dart';
-import 'package:flutter_tutorial/features/edit/update_button/update_button.dart';
+import 'package:flutter_tutorial/features/input_form/common/day_of_week_toggle_button.dart';
+import 'package:flutter_tutorial/features/input_form/common/time_picker.dart';
+import 'package:flutter_tutorial/features/input_form/common/title_text_field.dart';
+import 'package:flutter_tutorial/features/input_form/edit/update_button/update_button.dart';
+import 'package:flutter_tutorial/features/input_form/registration/save_button/save_button.dart';
 
 class InputForm extends StatefulWidget {
   const InputForm({

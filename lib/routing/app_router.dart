@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_tutorial/features/edit/edit_screen.dart';
-import 'package:flutter_tutorial/features/edit/registration_screen.dart';
 import 'package:flutter_tutorial/features/home/home_screen.dart';
+import 'package:flutter_tutorial/features/input_form/edit/edit_screen.dart';
+import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
 import 'package:flutter_tutorial/features/login/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
