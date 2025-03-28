@@ -9,14 +9,15 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 part 'daily_list_state.g.dart';
 
 @riverpod
-Future<List<Happiness>> dailyListState(Ref ref) async {
+Future<List<Happiness>> dailyListState(Ref ref, int dayOfWeek) async {
   final supabase = Supabase.instance.client;
   final response = await supabase.from('happiness').select();
 
-  // Supabaseから取得したデータをHappinessクラスのリストに変換
-  return (response as List)
-      .map(
-        (item) => Happiness.fromJson(item as Map<String, dynamic>),
-      )
+  final filteredList = (response as List)
+      .where((item) => (item['day_of_week'] as int) & dayOfWeek > 0)
+      .where((item) => (item['day_of_week'] as int) != 0)
+      .map((item) => Happiness.fromJson(item as Map<String, dynamic>))
       .toList();
+
+  return filteredList;
 }

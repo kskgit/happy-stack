@@ -13,7 +13,7 @@ class DailyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(dailyListStateProvider).when(
+    return ref.watch(dailyListStateProvider(dayOfWeek.value)).when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) =>
               Center(child: Text('エラーが発生しました: $error')),
