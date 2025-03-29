@@ -2,11 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/primary_button.dart';
-import 'package:flutter_tutorial/features/input_form/registration/save_button/save_button_controller.dart';
+import 'package:flutter_tutorial/features/input_form/registration/registration_button/registration_button_controller.dart';
 import 'package:flutter_tutorial/routing/app_router.dart';
 
-class SaveButton extends ConsumerWidget {
-  const SaveButton({
+class RegistrationButton extends ConsumerWidget {
+  const RegistrationButton({
     required this.title,
     required this.selectedDayOfWeek,
     required this.notificationTime,
@@ -22,7 +22,7 @@ class SaveButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(
-      saveButtonControllerProvider,
+      registrationButtonControllerProvider,
     );
     return PrimaryButton(
       text: '保存',
@@ -31,7 +31,7 @@ class SaveButton extends ConsumerWidget {
         if (!isValid()) {
           return;
         }
-        await ref.read(saveButtonControllerProvider.notifier).create(
+        await ref.read(registrationButtonControllerProvider.notifier).create(
               title,
               selectedDayOfWeek,
               notificationTime,

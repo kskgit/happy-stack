@@ -25,7 +25,7 @@ class UpdateButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(
-      saveButtonControllerProvider,
+      registrationButtonControllerProvider,
     );
     return PrimaryButton(
       text: '更新',

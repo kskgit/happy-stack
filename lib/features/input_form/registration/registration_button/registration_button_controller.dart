@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'save_button_controller.g.dart';
+part 'registration_button_controller.g.dart';
 
 @riverpod
-class SaveButtonController extends _$SaveButtonController {
+class RegistrationButtonController extends _$RegistrationButtonController {
   @override
   AsyncValue<void> build() {
     return const AsyncData(null);

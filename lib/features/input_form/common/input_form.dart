@@ -3,8 +3,9 @@ import 'package:flutter_tutorial/constants/theme.dart';
 import 'package:flutter_tutorial/features/input_form/common/day_of_week_toggle_button.dart';
 import 'package:flutter_tutorial/features/input_form/common/time_picker.dart';
 import 'package:flutter_tutorial/features/input_form/common/title_text_field.dart';
+import 'package:flutter_tutorial/features/input_form/edit/delete_button/delete_button.dart';
 import 'package:flutter_tutorial/features/input_form/edit/update_button/update_button.dart';
-import 'package:flutter_tutorial/features/input_form/registration/save_button/save_button.dart';
+import 'package:flutter_tutorial/features/input_form/registration/registration_button/registration_button.dart';
 
 class InputForm extends StatefulWidget {
   const InputForm({
@@ -109,19 +110,25 @@ class _InputFormState extends State<InputForm> {
                 ),
                 const SizedBox(height: 50),
                 if (widget.happinessId == null)
-                  SaveButton(
+                  RegistrationButton(
                     title: title,
                     selectedDayOfWeek: selectedDayOfWeek,
                     notificationTime: notificationTime,
                     isValid: isValid,
                   )
                 else
-                  UpdateButton(
-                    happinessId: widget.happinessId!,
-                    title: title,
-                    notificationTime: notificationTime,
-                    selectedDayOfWeek: selectedDayOfWeek,
-                    isValid: isValid,
+                  Column(
+                    children: [
+                      UpdateButton(
+                        happinessId: widget.happinessId!,
+                        title: title,
+                        notificationTime: notificationTime,
+                        selectedDayOfWeek: selectedDayOfWeek,
+                        isValid: isValid,
+                      ),
+                      const SizedBox(height: 20),
+                      DeleteButton(widget.happinessId!),
+                    ],
                   ),
                 const SizedBox(height: 20),
               ],
