@@ -11,7 +11,8 @@ part 'daily_list_state.g.dart';
 @riverpod
 Future<List<Happiness>> dailyListState(Ref ref, int dayOfWeek) async {
   final supabase = Supabase.instance.client;
-  final response = await supabase.from('happiness').select();
+  final response =
+      await supabase.from('happiness').select().order('id', ascending: true);
 
   final filteredList = (response as List)
       .where((item) => (item['day_of_week'] as int) & dayOfWeek > 0)
