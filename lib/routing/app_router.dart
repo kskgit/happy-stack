@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_tutorial/features/home/domain/happiness.dart';
 import 'package:flutter_tutorial/features/home/home_screen.dart';
 import 'package:flutter_tutorial/features/input_form/edit/edit_screen.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
@@ -17,7 +18,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: EditRoute.page,
           guards: [AuthGuard()],
-          path: '/edit/:happinessId?',
         ),
         AutoRoute(page: RegistrationRoute.page, guards: [AuthGuard()]),
       ];

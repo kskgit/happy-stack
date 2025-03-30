@@ -14,7 +14,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await context.router.push(EditRoute(happinessId: happiness.id));
+        await context.router.push(EditRoute(happiness: happiness));
       },
       child: Card(
         shape: RoundedRectangleBorder(
