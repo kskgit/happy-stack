@@ -1,9 +1,23 @@
 # クラスの種類
-- Widget
-- Controller
-  - 非同期処理が発生するウィジェットの状態を管理します。
-    - 例）ローディング、エラー、データ取得完了
-  - riverpodを利用します
+
+##  Widget
+### 役割
+UIを実装します
+
+### 命名規約
+- `役割_widget名`
+  - 例）`registration_button.dart`
+
+##  Controller
+### 役割
+- 非同期処理が発生するウィジェットの状態を管理します。
+  - 例）ローディング、エラー、データ取得完了
+- riverpodを利用します
+
+### 命名規約
+- `{管理対象のウィジェット}_controller`
+  - 例）`registration_button_controller.dart`
+
 - Domain
 
 # 各ディレクトリ毎の役割
@@ -13,14 +27,13 @@ common_widgets
 feature
 - 機能単位でフォルダを分けています
 - 基本的にはscreen毎に1フォルダ用意しています
-- 
+- widget,controllerが存在する場合、更にその下にフォルダを作ってまとめて格納します
+  - これは可読性向上のためです 
 
 constants
 - 固定値
 
-# ファイルの命名規約
-- ウィジェットは`役割_widget名`です
-  - 例）primary_button.dart
+
 - その他のクラスには現在命名規約はありません。
   - 例）day_of_week.dart
 
