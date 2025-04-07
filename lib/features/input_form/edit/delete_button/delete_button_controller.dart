@@ -1,5 +1,5 @@
+import 'package:flutter_tutorial/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'delete_button_controller.g.dart';
 
@@ -13,7 +13,7 @@ class DeleteButtonController extends _$DeleteButtonController {
   Future<void> delete(int happinessId) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final supabase = Supabase.instance.client;
+      final supabase = ref.read(supabaseClientProvider);
       await supabase.from('happiness').delete().eq('id', happinessId);
     });
   }
