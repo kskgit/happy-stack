@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'update_button_controller.g.dart';
 
@@ -19,7 +19,7 @@ class UpdatButtunoCntroller extends _$UpdatButtunoCntroller {
   }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final supabase = Supabase.instance.client;
+      final supabase = ref.read(supabaseClientProvider);
       await supabase.from('happiness').update({
         'name': title,
         'day_of_week': selectedDayOfWeek,

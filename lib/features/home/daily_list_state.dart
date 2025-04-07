@@ -3,14 +3,14 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/features/home/domain/happiness.dart';
+import 'package:flutter_tutorial/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'daily_list_state.g.dart';
 
 @riverpod
 Future<List<Happiness>> dailyListState(Ref ref, int dayOfWeek) async {
-  final supabase = Supabase.instance.client;
+  final supabase = ref.read(supabaseClientProvider);
   final response =
       await supabase.from('happiness').select().order('id', ascending: true);
 
