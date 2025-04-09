@@ -40,3 +40,5 @@ constants
 # 設計指針
 - 状態の更新が発生するウィジェットはStateFullWidgetを利用します
 - riverpodはriverpod generatorを利用します
+
+- theme.dartに色は記述します
