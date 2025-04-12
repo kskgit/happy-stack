@@ -1,14 +1,29 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
+import 'package:flutter_tutorial/features/home/daily_list.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
 
+// 選択された曜日を管理するプロバイダー
+final selectedDayProvider = StateProvider<DayOfWeek>((ref) {
+  // 現在の曜日を初期値として使用
+  final now = DateTime.now();
+  var dayIndex = now.weekday - 1; // 0 = 月曜日, 6 = 日曜日
+
+  // 日曜日の場合は配列の最後の要素を使用
+  if (dayIndex == 7) dayIndex = 6;
+
+  return DayOfWeek.values[dayIndex];
+});
+
 @RoutePage()
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedDay = ref.watch(selectedDayProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('トップページ'),
@@ -29,38 +44,11 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // 上部のカードコンテナ
+          // 上部のDailyListコンテナ
           Container(
             height: 200,
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildActivityCard(
-                  'Water Plants',
-                  'Log daily relax & unwind time',
-                  Colors.green.shade100,
-                  Colors.green,
-                  Icons.spa,
-                ),
-                const SizedBox(width: 16),
-                _buildActivityCard(
-                  'Daily Exercises',
-                  'You have Walked for 30mins',
-                  Colors.blue.shade100,
-                  Colors.blue,
-                  Icons.directions_walk,
-                ),
-                const SizedBox(width: 16),
-                _buildActivityCard(
-                  'Your Daily Mood',
-                  'You logged a Happy Mood',
-                  Colors.amber.shade100,
-                  Colors.amber,
-                  Icons.mood,
-                ),
-              ],
-            ),
+            child: DailyList(dayOfWeek: selectedDay),
           ),
 
           const SizedBox(height: 24),
@@ -72,7 +60,7 @@ class HomeScreen extends StatelessWidget {
               height: 120,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: _buildDayCards(),
+                children: _buildDayCards(ref, selectedDay),
               ),
             ),
           ),
@@ -178,7 +166,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   // 曜日カードを生成するメソッド
-  List<Widget> _buildDayCards() {
+  List<Widget> _buildDayCards(WidgetRef ref, DayOfWeek selectedDay) {
     final now = DateTime.now();
     final dayCards = <Widget>[];
 
@@ -190,62 +178,75 @@ class HomeScreen extends StatelessWidget {
       if (dayIndex == 7) dayIndex = 6;
 
       final dayOfWeek = DayOfWeek.values[dayIndex];
+      final isSelected = dayOfWeek == selectedDay;
 
       dayCards.add(
         Padding(
           padding: const EdgeInsets.only(right: 12),
-          child: Container(
-            width: 80,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 5,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  dayOfWeek.displayValue,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
+          child: InkWell(
+            onTap: () {
+              // 選択された曜日を更新
+              ref.read(selectedDayProvider.notifier).state = dayOfWeek;
+            },
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              width: 80,
+              decoration: BoxDecoration(
+                color: isSelected ? Colors.purple.shade100 : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 5,
+                    spreadRadius: 1,
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  date.day.toString(),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    dayOfWeek.displayValue,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: isSelected ? Colors.purple : Colors.grey,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                if (i % 2 == 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.circle,
-                        size: 8,
-                        color: Colors.grey.shade400,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${i + 1} Meals',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey.shade600,
+                  const SizedBox(height: 4),
+                  Text(
+                    date.day.toString(),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? Colors.purple : Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  if (i % 2 == 0)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          size: 8,
+                          color: isSelected
+                              ? Colors.purple.shade300
+                              : Colors.grey.shade400,
                         ),
-                      ),
-                    ],
-                  ),
-              ],
+                        const SizedBox(width: 4),
+                        Text(
+                          '${i + 1} Meals',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: isSelected
+                                ? Colors.purple.shade700
+                                : Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ),
           ),
         ),
