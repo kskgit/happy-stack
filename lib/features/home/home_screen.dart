@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
+import 'package:flutter_tutorial/routing/app_router.dart';
 
 // 選択された曜日を管理するプロバイダー
 final selectedDayProvider = StateProvider<DayOfWeek>((ref) {
@@ -26,7 +27,6 @@ class HomeScreen extends ConsumerWidget {
     final selectedDay = ref.watch(selectedDayProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('トップページ'),
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
@@ -82,33 +82,34 @@ class HomeScreen extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildNavItem(Icons.home, 'Home', true),
-                _buildNavItem(Icons.person, 'Person', false),
-                const SizedBox(width: 60), // 中央のボタン用スペース
-                _buildNavItem(Icons.book, 'Guides', false),
-                _buildNavItem(Icons.chat_bubble_outline, 'Chat', false),
+                _buildNavItem(
+                  Icons.home,
+                  'Home',
+                  true,
+                  () => context.router.push(const HomeRoute()),
+                ),
+                _buildNavItem(
+                  Icons.add,
+                  'Add',
+                  false,
+                  () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          child: const RegistrationScreen(),
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet<void>(
-            context: context,
-            isScrollControlled: true,
-            builder: (BuildContext context) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.9,
-                child: const RegistrationScreen(),
-              );
-            },
-          );
-        },
-        backgroundColor: Colors.purple.shade300,
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -257,22 +258,30 @@ class HomeScreen extends ConsumerWidget {
   }
 
   // ナビゲーションアイテムを生成するメソッド
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          color: isActive ? Colors.purple.shade300 : Colors.grey,
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
+  Widget _buildNavItem(
+    IconData icon,
+    String label,
+    bool isActive,
+    VoidCallback onTapFunction,
+  ) {
+    return GestureDetector(
+      onTap: () => onTapFunction(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
             color: isActive ? Colors.purple.shade300 : Colors.grey,
           ),
-        ),
-      ],
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: isActive ? Colors.purple.shade300 : Colors.grey,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
