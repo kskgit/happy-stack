@@ -223,6 +223,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  // TODOAPI経由で取得するように変更する
                   if (i % 2 == 0)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
