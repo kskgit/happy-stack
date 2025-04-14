@@ -12,20 +12,33 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () async {
         await context.router.push(EditRoute(happiness: happiness));
       },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+      child: Container(
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+          color: const Color(0xFFB5E0FF),
+          borderRadius: BorderRadius.circular(20),
         ),
-        child: ListTile(
-          leading: const CircleAvatar(
-            backgroundColor: Colors.orange,
-            child: Icon(Icons.emoji_emotions, color: Colors.white),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 10,
+            children: [
+              Text(
+                happiness.name,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0D47A1),
+                ),
+              ),
+            ],
           ),
-          title: Text(happiness.name),
         ),
       ),
     );
