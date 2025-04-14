@@ -17,7 +17,7 @@ class EventCard extends StatelessWidget {
         await context.router.push(EditRoute(happiness: happiness));
       },
       child: Container(
-        width: 200,
+        width: 150,
         height: 200,
         decoration: BoxDecoration(
           color: const Color(0xFFB5E0FF),

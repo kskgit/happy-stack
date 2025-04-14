@@ -17,15 +17,14 @@ class DailyList extends ConsumerWidget {
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) =>
               Center(child: Text('エラーが発生しました: $error')),
-          data: (happinessList) => ListView(
+          data: (happinessList) => ListView.separated(
+            scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.all(16),
-            children: [
-              ...happinessList.map(
-                (happiness) => EventCard(
-                  happiness: happiness,
-                ),
-              ),
-            ],
+            itemCount: happinessList.length,
+            separatorBuilder: (context, index) => const SizedBox(width: 16),
+            itemBuilder: (context, index) => EventCard(
+              happiness: happinessList[index],
+            ),
           ),
         );
   }
