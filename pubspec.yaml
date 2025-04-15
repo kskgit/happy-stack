@@ -44,6 +44,7 @@ dependencies:
   hooks_riverpod: ^2.6.1
   retrofit: ^4.4.2
   riverpod_annotation: ^2.6.1
+  shimmer: ^3.0.0
   supabase_flutter: ^2.8.3
 
 dev_dependencies:

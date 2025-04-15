@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list_state.dart';
 import 'package:flutter_tutorial/features/home/event_card.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DailyList extends ConsumerWidget {
   const DailyList({
@@ -14,7 +15,11 @@ class DailyList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(dailyListStateProvider(dayOfWeek.value)).when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
+            itemBuilder: (context, index) => const SkeletonItem(),
+          ),
           error: (error, stackTrace) =>
               Center(child: Text('エラーが発生しました: $error')),
           data: (happinessList) => ListView.separated(
@@ -27,5 +32,29 @@ class DailyList extends ConsumerWidget {
             ),
           ),
         );
+  }
+}
+
+// スケルトンアイテムのウィジェット
+class SkeletonItem extends StatelessWidget {
+  const SkeletonItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          width: 150,
+          height: 200,
+          decoration: BoxDecoration(
+            color: const Color(0xFFB5E0FF),
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+      ),
+    );
   }
 }
