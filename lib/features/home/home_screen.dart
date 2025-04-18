@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
-import 'package:flutter_tutorial/routing/app_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // 選択された曜日を管理するプロバイダー
@@ -43,6 +42,38 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(width: 16),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final panelController = PanelController();
+          showDialog(
+            context: context,
+            builder: (context) => SlidingUpPanel(
+              controller: panelController,
+              backdropEnabled: true,
+              backdropColor: Colors.black.withOpacity(0.5),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+              minHeight: 0,
+              maxHeight: MediaQuery.of(context).size.height * 0.9,
+              panel: const RegistrationScreen(),
+              body: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+          );
+
+          // パネルを開く
+          Future.delayed(
+            const Duration(milliseconds: 100),
+            panelController.open,
+          );
+        },
+        backgroundColor: Colors.purple.shade300,
+        child: const Icon(Icons.add),
+      ),
       body: Column(
         children: [
           // 上部のDailyListコンテナ
@@ -67,115 +98,6 @@ class HomeScreen extends ConsumerWidget {
           ),
 
           const Spacer(),
-
-          // 下部ナビゲーションバー
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNavItem(
-                  Icons.home,
-                  'Home',
-                  true,
-                  () => context.router.push(const HomeRoute()),
-                ),
-                _buildNavItem(
-                  Icons.add,
-                  'Add',
-                  false,
-                  () {
-                    final panelController = PanelController();
-                    showDialog(
-                      context: context,
-                      builder: (context) => SlidingUpPanel(
-                        controller: panelController,
-                        backdropEnabled: true,
-                        backdropColor: Colors.black.withOpacity(0.5),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24),
-                        ),
-                        minHeight: 0,
-                        maxHeight: MediaQuery.of(context).size.height * 0.9,
-                        panel: const RegistrationScreen(),
-                        body: GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(color: Colors.transparent),
-                        ),
-                      ),
-                    );
-
-                    // パネルを開く
-                    Future.delayed(const Duration(milliseconds: 100),
-                        panelController.open);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // アクティビティカードを生成するメソッド
-  Widget _buildActivityCard(
-    String title,
-    String subtitle,
-    Color bgColor,
-    Color textColor,
-    IconData icon,
-  ) {
-    return Container(
-      width: 160,
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: TextStyle(
-              fontSize: 12,
-              color: textColor.withOpacity(0.8),
-            ),
-          ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: textColor,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ),
-            child: const Text('Start Now'),
-          ),
         ],
       ),
     );
