@@ -5,6 +5,7 @@ import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
 import 'package:flutter_tutorial/routing/app_router.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // 選択された曜日を管理するプロバイダー
 final selectedDayProvider = StateProvider<DayOfWeek>((ref) {
@@ -93,16 +94,30 @@ class HomeScreen extends ConsumerWidget {
                   'Add',
                   false,
                   () {
-                    showModalBottomSheet<void>(
+                    final panelController = PanelController();
+                    showDialog(
                       context: context,
-                      isScrollControlled: true,
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.9,
-                          child: const RegistrationScreen(),
-                        );
-                      },
+                      builder: (context) => SlidingUpPanel(
+                        controller: panelController,
+                        backdropEnabled: true,
+                        backdropColor: Colors.black.withOpacity(0.5),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24),
+                        ),
+                        minHeight: 0,
+                        maxHeight: MediaQuery.of(context).size.height * 0.9,
+                        panel: const RegistrationScreen(),
+                        body: GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Container(color: Colors.transparent),
+                        ),
+                      ),
                     );
+
+                    // パネルを開く
+                    Future.delayed(const Duration(milliseconds: 100),
+                        panelController.open);
                   },
                 ),
               ],
