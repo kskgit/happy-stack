@@ -191,32 +191,4 @@ class HomeScreen extends ConsumerWidget {
 
     return dayCards;
   }
-
-  // ナビゲーションアイテムを生成するメソッド
-  Widget _buildNavItem(
-    IconData icon,
-    String label,
-    bool isActive,
-    VoidCallback onTapFunction,
-  ) {
-    return GestureDetector(
-      onTap: () => onTapFunction(),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: isActive ? Colors.purple.shade300 : Colors.grey,
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: isActive ? Colors.purple.shade300 : Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
