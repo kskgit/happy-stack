@@ -8,14 +8,11 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // 選択された曜日を管理するプロバイダー
 final selectedDayProvider = StateProvider<DayOfWeek>((ref) {
-  // 現在の曜日を初期値として使用
   final now = DateTime.now();
-  var dayIndex = now.weekday - 1; // 0 = 月曜日, 6 = 日曜日
 
-  // 日曜日の場合は配列の最後の要素を使用
-  if (dayIndex == 7) dayIndex = 6;
-
-  return DayOfWeek.values[dayIndex];
+  return DayOfWeek.values.firstWhere(
+    (day) => day.weekdayIndex == (now.weekday),
+  );
 });
 
 @RoutePage()
