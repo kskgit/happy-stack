@@ -105,14 +105,11 @@ class HomeScreen extends ConsumerWidget {
     final now = DateTime.now();
     final dayCards = <Widget>[];
 
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < DayOfWeek.values.length; i++) {
       final date = DateTime(now.year, now.month, now.day + i);
-      var dayIndex = date.weekday - 1; // 0 = 月曜日, 6 = 日曜日
-
-      // 日曜日の場合は配列の最後の要素を使用
-      if (dayIndex == 7) dayIndex = 6;
-
-      final dayOfWeek = DayOfWeek.values[dayIndex];
+      final dayOfWeek = DayOfWeek.values.firstWhere(
+        (day) => day.weekdayIndex == (date.weekday),
+      );
       final isSelected = dayOfWeek == selectedDay;
 
       dayCards.add(
