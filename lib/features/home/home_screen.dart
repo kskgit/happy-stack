@@ -4,16 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
+import 'package:flutter_tutorial/providers/selected_day_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-// 選択された曜日を管理するプロバイダー
-final selectedDayProvider = StateProvider<DayOfWeek>((ref) {
-  final now = DateTime.now();
-
-  return DayOfWeek.values.firstWhere(
-    (day) => day.weekdayIndex == (now.weekday),
-  );
-});
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
@@ -118,7 +110,7 @@ class HomeScreen extends ConsumerWidget {
           child: InkWell(
             onTap: () {
               // 選択された曜日を更新
-              ref.read(selectedDayProvider.notifier).state = dayOfWeek;
+              ref.read(selectedDayProvider.notifier).updateDay(dayOfWeek);
             },
             borderRadius: BorderRadius.circular(16),
             child: Container(
