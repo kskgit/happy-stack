@@ -14,24 +14,28 @@ class DailyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(dailyListStateProvider(dayOfWeek.value)).when(
-          loading: () => ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 3,
-            itemBuilder: (context, index) => const SkeletonItem(),
-          ),
-          error: (error, stackTrace) =>
-              Center(child: Text('エラーが発生しました: $error')),
-          data: (happinessList) => ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.all(16),
-            itemCount: happinessList.length,
-            separatorBuilder: (context, index) => const SizedBox(width: 16),
-            itemBuilder: (context, index) => EventCard(
-              happiness: happinessList[index],
+    return Container(
+      height: 200,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ref.watch(dailyListStateProvider(dayOfWeek.value)).when(
+            loading: () => ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 3,
+              itemBuilder: (context, index) => const SkeletonItem(),
+            ),
+            error: (error, stackTrace) =>
+                Center(child: Text('エラーが発生しました: $error')),
+            data: (happinessList) => ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.all(16),
+              itemCount: happinessList.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 16),
+              itemBuilder: (context, index) => EventCard(
+                happiness: happinessList[index],
+              ),
             ),
           ),
-        );
+    );
   }
 }
 

@@ -35,11 +35,7 @@ class HomeScreen extends ConsumerWidget {
       body: Column(
         children: [
           // 上部のDailyListコンテナ
-          Container(
-            height: 200,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DailyList(dayOfWeek: selectedDay),
-          ),
+          DailyList(dayOfWeek: selectedDay),
 
           const SizedBox(height: 24),
 
