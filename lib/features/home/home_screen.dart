@@ -32,6 +32,32 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(width: 16),
         ],
       ),
+      body: Column(
+        children: [
+          // 上部のDailyListコンテナ
+          Container(
+            height: 200,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DailyList(dayOfWeek: selectedDay),
+          ),
+
+          const SizedBox(height: 24),
+
+          // 曜日カードコンテナ
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
+              height: 120,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: _buildDayCards(ref, selectedDay),
+              ),
+            ),
+          ),
+
+          const Spacer(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final panelController = PanelController();
@@ -62,32 +88,6 @@ class HomeScreen extends ConsumerWidget {
         },
         backgroundColor: Colors.purple.shade300,
         child: const Icon(Icons.add),
-      ),
-      body: Column(
-        children: [
-          // 上部のDailyListコンテナ
-          Container(
-            height: 200,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DailyList(dayOfWeek: selectedDay),
-          ),
-
-          const SizedBox(height: 24),
-
-          // 曜日カードコンテナ
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SizedBox(
-              height: 120,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: _buildDayCards(ref, selectedDay),
-              ),
-            ),
-          ),
-
-          const Spacer(),
-        ],
       ),
     );
   }
