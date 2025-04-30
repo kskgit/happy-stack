@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
-import 'package:flutter_tutorial/features/home/widgets/day_card.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_card.dart';
 
-class WeeklyDayCards extends StatelessWidget {
-  const WeeklyDayCards({
+class WeeklyDayList extends StatelessWidget {
+  const WeeklyDayList({
     required this.ref,
     required this.selectedDay,
     super.key,
@@ -13,6 +13,7 @@ class WeeklyDayCards extends StatelessWidget {
   final WidgetRef ref;
   final DayOfWeek selectedDay;
 
+  // todo 件数を取得するAPIを追加する
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -30,7 +31,7 @@ class WeeklyDayCards extends StatelessWidget {
                 (day) => day.weekdayIndex == (date.weekday),
               );
 
-              return DayCard(
+              return WeeklyDayCard(
                 date: date,
                 dayOfWeek: dayOfWeek,
                 isSelected: dayOfWeek == selectedDay,

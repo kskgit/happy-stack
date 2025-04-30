@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/features/home/domain/happiness.dart';
 import 'package:flutter_tutorial/routing/app_router.dart';
 
-class EventCard extends StatelessWidget {
-  const EventCard({
+class DailyCard extends StatelessWidget {
+  const DailyCard({
     required this.happiness,
     super.key,
   });

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/providers/selected_day_provider.dart';
 
-class DayCard extends ConsumerWidget {
-  const DayCard({
+class WeeklyDayCard extends ConsumerWidget {
+  const WeeklyDayCard({
     required this.date,
     required this.dayOfWeek,
     required this.isSelected,

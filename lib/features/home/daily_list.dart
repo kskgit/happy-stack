@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
+import 'package:flutter_tutorial/features/home/daily_card.dart';
 import 'package:flutter_tutorial/features/home/daily_list_state.dart';
-import 'package:flutter_tutorial/features/home/event_card.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DailyList extends ConsumerWidget {
@@ -30,7 +30,7 @@ class DailyList extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               itemCount: happinessList.length,
               separatorBuilder: (context, index) => const SizedBox(width: 16),
-              itemBuilder: (context, index) => EventCard(
+              itemBuilder: (context, index) => DailyCard(
                 happiness: happinessList[index],
               ),
             ),

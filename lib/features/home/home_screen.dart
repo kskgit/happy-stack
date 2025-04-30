@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
-import 'package:flutter_tutorial/features/home/weekly_day_cards.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_list.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
 import 'package:flutter_tutorial/providers/selected_day_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -35,7 +35,7 @@ class HomeScreen extends ConsumerWidget {
         children: [
           DailyList(dayOfWeek: selectedDay),
           const SizedBox(height: 24),
-          WeeklyDayCards(ref: ref, selectedDay: selectedDay),
+          WeeklyDayList(ref: ref, selectedDay: selectedDay),
           const Spacer(),
         ],
       ),
