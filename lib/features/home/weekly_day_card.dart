@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
-import 'package:flutter_tutorial/providers/selected_day_provider.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_selected_controller.dart';
 
 class WeeklyDayCard extends ConsumerWidget {
   const WeeklyDayCard({
@@ -23,7 +23,9 @@ class WeeklyDayCard extends ConsumerWidget {
       padding: const EdgeInsets.only(right: 12),
       child: InkWell(
         onTap: () {
-          ref.read(selectedDayProvider.notifier).updateDay(dayOfWeek);
+          ref
+              .read(weeklyDaySelectedControlloerProvider.notifier)
+              .updateDay(dayOfWeek);
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(

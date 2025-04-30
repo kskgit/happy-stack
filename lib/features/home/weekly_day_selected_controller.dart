@@ -1,10 +1,10 @@
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'selected_day_provider.g.dart';
+part 'weekly_day_selected_controller.g.dart';
 
 @riverpod
-class SelectedDay extends _$SelectedDay {
+class WeeklyDaySelectedControlloer extends _$WeeklyDaySelectedControlloer {
   @override
   DayOfWeek build() {
     final now = DateTime.now();

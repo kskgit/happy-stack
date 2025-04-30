@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
 import 'package:flutter_tutorial/features/home/weekly_day_list.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_selected_controller.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
-import 'package:flutter_tutorial/providers/selected_day_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 @RoutePage()
@@ -13,7 +13,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedDay = ref.watch(selectedDayProvider);
+    final selectedDay = ref.watch(weeklyDaySelectedControlloerProvider);
     return Scaffold(
       appBar: AppBar(
         actions: [
