@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list.dart';
-import 'package:flutter_tutorial/features/home/widgets/day_card.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_cards.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_screen.dart';
 import 'package:flutter_tutorial/providers/selected_day_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -34,13 +33,9 @@ class HomeScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          // 上部のDailyListコンテナ
           DailyList(dayOfWeek: selectedDay),
-
           const SizedBox(height: 24),
-
-          _buildWeeklyDayCards(ref, selectedDay),
-
+          WeeklyDayCards(ref: ref, selectedDay: selectedDay),
           const Spacer(),
         ],
       ),
@@ -74,35 +69,6 @@ class HomeScreen extends ConsumerWidget {
         },
         backgroundColor: Colors.purple.shade300,
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _buildWeeklyDayCards(WidgetRef ref, DayOfWeek selectedDay) {
-    final now = DateTime.now();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        height: 120,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: List.generate(
-            DayOfWeek.values.length,
-            (i) {
-              final date = DateTime(now.year, now.month, now.day + i);
-              final dayOfWeek = DayOfWeek.values.firstWhere(
-                (day) => day.weekdayIndex == (date.weekday),
-              );
-
-              return DayCard(
-                date: date,
-                dayOfWeek: dayOfWeek,
-                isSelected: dayOfWeek == selectedDay,
-                happyCount: i % 2 == 0 ? i + 1 : null, // TODO: API経由で取得するように変更
-              );
-            },
-          ),
-        ),
       ),
     );
   }
