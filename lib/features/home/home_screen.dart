@@ -43,17 +43,7 @@ class HomeScreen extends ConsumerWidget {
 
           const SizedBox(height: 24),
 
-          // 曜日カードコンテナ
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SizedBox(
-              height: 120,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: _buildDayCards(ref, selectedDay),
-              ),
-            ),
-          ),
+          _buildWeeklyDayCards(ref, selectedDay),
 
           const Spacer(),
         ],
@@ -92,24 +82,32 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  // 曜日カードを生成するメソッド
-  List<Widget> _buildDayCards(WidgetRef ref, DayOfWeek selectedDay) {
+  Widget _buildWeeklyDayCards(WidgetRef ref, DayOfWeek selectedDay) {
     final now = DateTime.now();
-    return List.generate(
-      DayOfWeek.values.length,
-      (i) {
-        final date = DateTime(now.year, now.month, now.day + i);
-        final dayOfWeek = DayOfWeek.values.firstWhere(
-          (day) => day.weekdayIndex == (date.weekday),
-        );
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: SizedBox(
+        height: 120,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: List.generate(
+            DayOfWeek.values.length,
+            (i) {
+              final date = DateTime(now.year, now.month, now.day + i);
+              final dayOfWeek = DayOfWeek.values.firstWhere(
+                (day) => day.weekdayIndex == (date.weekday),
+              );
 
-        return DayCard(
-          date: date,
-          dayOfWeek: dayOfWeek,
-          isSelected: dayOfWeek == selectedDay,
-          happyCount: i % 2 == 0 ? i + 1 : null, // TODO: API経由で取得するように変更
-        );
-      },
+              return DayCard(
+                date: date,
+                dayOfWeek: dayOfWeek,
+                isSelected: dayOfWeek == selectedDay,
+                happyCount: i % 2 == 0 ? i + 1 : null, // TODO: API経由で取得するように変更
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
