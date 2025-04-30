@@ -35,12 +35,11 @@ class HomeScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final panelController = PanelController();
-          showDialog(
+          showDialog<void>(
             context: context,
             builder: (context) => SlidingUpPanel(
               controller: panelController,
               backdropEnabled: true,
-              backdropColor: Colors.black.withOpacity(0.5),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
