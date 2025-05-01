@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_card_controller.dart';
 import 'package:flutter_tutorial/features/home/weekly_day_selected_controller.dart';
 
 class WeeklyDayCard extends ConsumerWidget {
@@ -19,6 +20,8 @@ class WeeklyDayCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final happinessCount =
+        ref.watch(weeklyDayCardControllerProvider(dayOfWeek));
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: InkWell(
@@ -63,7 +66,7 @@ class WeeklyDayCard extends ConsumerWidget {
               const SizedBox(height: 8),
               if (happyCount != null)
                 _HappyCountBadge(
-                  count: happyCount!,
+                  count: happinessCount.value!,
                   isSelected: isSelected,
                 ),
             ],
