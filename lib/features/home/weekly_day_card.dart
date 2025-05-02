@@ -63,7 +63,7 @@ class WeeklyDayCard extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               _HappyCountBadge(
-                count: happinessCount.value!,
+                count: happinessCount.value,
                 isSelected: isSelected,
               ),
             ],
@@ -80,7 +80,7 @@ class _HappyCountBadge extends StatelessWidget {
     required this.isSelected,
   });
 
-  final int count;
+  final int? count;
   final bool isSelected;
 
   @override
@@ -95,7 +95,7 @@ class _HappyCountBadge extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         Text(
-          count.toString(),
+          count != null ? count.toString() : '',
           style: TextStyle(
             fontSize: 10,
             color: isSelected ? Colors.purple.shade700 : Colors.grey.shade600,
