@@ -35,7 +35,6 @@ class WeeklyDayList extends StatelessWidget {
                 date: date,
                 dayOfWeek: dayOfWeek,
                 isSelected: dayOfWeek == selectedDay,
-                happyCount: i % 2 == 0 ? i + 1 : null, // TODO: API経由で取得するように変更
               );
             },
           ),

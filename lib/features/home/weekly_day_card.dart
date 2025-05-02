@@ -9,14 +9,12 @@ class WeeklyDayCard extends ConsumerWidget {
     required this.date,
     required this.dayOfWeek,
     required this.isSelected,
-    required this.happyCount,
     super.key,
   });
 
   final DateTime date;
   final DayOfWeek dayOfWeek;
   final bool isSelected;
-  final int? happyCount;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,11 +62,10 @@ class WeeklyDayCard extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              if (happyCount != null)
-                _HappyCountBadge(
-                  count: happinessCount.value!,
-                  isSelected: isSelected,
-                ),
+              _HappyCountBadge(
+                count: happinessCount.value!,
+                isSelected: isSelected,
+              ),
             ],
           ),
         ),
