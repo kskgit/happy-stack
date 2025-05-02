@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'daily_list_state.g.dart';
 
+// TODO(me): user id未指定のため追加する
 @riverpod
 Future<List<Happiness>> dailyListState(Ref ref, int dayOfWeek) async {
   final supabase = ref.read(supabaseClientProvider);

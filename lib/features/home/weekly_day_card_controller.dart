@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'weekly_day_card_controller.g.dart';
 
+// TODO(me): user id未指定のため追加する
 @riverpod
 Future<int> weeklyDayCardController(
   Ref ref,
