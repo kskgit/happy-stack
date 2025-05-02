@@ -37,3 +37,12 @@ sealed class Happiness with _$Happiness {
   factory Happiness.fromJson(Map<String, dynamic> json) =>
       _$HappinessFromJson(json);
 }
+
+extension HappinessListExtension on List<dynamic> {
+  List<Happiness> toFilteredHappinessList(int dayOfWeek) {
+    return where((item) => (item['day_of_week'] as int) & dayOfWeek > 0)
+        .where((item) => (item['day_of_week'] as int) != 0)
+        .map((item) => Happiness.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+}

@@ -15,11 +15,7 @@ Future<List<Happiness>> dailyListState(Ref ref, int dayOfWeek) async {
   final response =
       await supabase.from('happiness').select().order('id', ascending: true);
 
-  final filteredList = (response as List)
-      .where((item) => (item['day_of_week'] as int) & dayOfWeek > 0)
-      .where((item) => (item['day_of_week'] as int) != 0)
-      .map((item) => Happiness.fromJson(item as Map<String, dynamic>))
-      .toList();
+  final filteredList = (response as List).toFilteredHappinessList(dayOfWeek);
 
   return filteredList;
 }
