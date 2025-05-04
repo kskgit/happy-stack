@@ -25,7 +25,7 @@ class DeleteButton extends ConsumerWidget {
             .read(deleteButtonControllerProvider.notifier)
             .delete(happinessId);
         for (final day in DayOfWeek.values) {
-          ref.invalidate(dailyListStateProvider(day.value));
+          ref.invalidate(dailyListStateProvider(day));
         }
         if (context.mounted) {
           await context.router.push(const HomeRoute());

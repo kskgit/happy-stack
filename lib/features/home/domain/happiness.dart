@@ -2,6 +2,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:flutter/material.dart' show TimeOfDay;
+import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'happiness.freezed.dart';
@@ -39,8 +40,8 @@ sealed class Happiness with _$Happiness {
 }
 
 extension HappinessListExtension on List<dynamic> {
-  List<Happiness> toFilteredHappinessList(int dayOfWeek) {
-    return where((item) => (item['day_of_week'] as int) & dayOfWeek > 0)
+  List<Happiness> toFilteredHappinessList(DayOfWeek dayOfWeek) {
+    return where((item) => (item['day_of_week'] as int) & dayOfWeek.value > 0)
         .where((item) => (item['day_of_week'] as int) != 0)
         .map((item) => Happiness.fromJson(item as Map<String, dynamic>))
         .toList();

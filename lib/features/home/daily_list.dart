@@ -17,7 +17,7 @@ class DailyList extends ConsumerWidget {
     return Container(
       height: 200,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ref.watch(dailyListStateProvider(dayOfWeek.value)).when(
+      child: ref.watch(dailyListStateProvider(dayOfWeek)).when(
             loading: () => ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 3,

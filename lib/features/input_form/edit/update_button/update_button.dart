@@ -43,7 +43,7 @@ class UpdateButton extends ConsumerWidget {
               notificationTime: notificationTime,
             );
         for (final day in DayOfWeek.values) {
-          ref.invalidate(dailyListStateProvider(day.value));
+          ref.invalidate(dailyListStateProvider(day));
         }
         if (context.mounted) {
           await context.router.push(const HomeRoute());
