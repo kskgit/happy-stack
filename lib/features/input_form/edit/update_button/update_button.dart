@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tutorial/common_widgets/primary_button.dart';
 import 'package:flutter_tutorial/constants/day_of_week.dart';
 import 'package:flutter_tutorial/features/home/daily_list_state.dart';
+import 'package:flutter_tutorial/features/home/weekly_day_card_controller.dart';
 import 'package:flutter_tutorial/features/input_form/edit/update_button/update_button_controller.dart';
 import 'package:flutter_tutorial/features/input_form/registration/registration_button/registration_button_controller.dart';
 import 'package:flutter_tutorial/routing/app_router.dart';
@@ -43,7 +44,9 @@ class UpdateButton extends ConsumerWidget {
               notificationTime: notificationTime,
             );
         for (final day in DayOfWeek.values) {
-          ref.invalidate(dailyListStateProvider(day));
+          ref
+            ..invalidate(weeklyDayCardControllerProvider(day))
+            ..invalidate(dailyListStateProvider(day));
         }
         if (context.mounted) {
           await context.router.push(const HomeRoute());
