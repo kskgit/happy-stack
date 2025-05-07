@@ -13,7 +13,6 @@ class WeeklyDayList extends StatelessWidget {
   final WidgetRef ref;
   final DayOfWeek selectedDay;
 
-  // todo 件数を取得するAPIを追加する
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
