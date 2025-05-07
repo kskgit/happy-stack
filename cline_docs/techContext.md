@@ -16,6 +16,8 @@
 - Dart SDK: 3.2.5以降
 - Flutter: 最新安定版
 - FVM: Flutter Version Managementに使用
+  - **重要**: すべてのFlutterコマンドは必ず`fvm flutter`を通して実行すること
+    (例: `fvm flutter pub add`, `fvm flutter build`, `fvm flutter run`など)
 
 ## 技術的制約
 - Supabaseインスタンスは現在、各コントローラーで直接参照されており、テスト困難
