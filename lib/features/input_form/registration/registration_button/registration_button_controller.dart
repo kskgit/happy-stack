@@ -15,6 +15,7 @@ class RegistrationButtonController extends _$RegistrationButtonController {
     String title,
     int selectedDayOfWeek,
     TimeOfDay notificationTime,
+    String? emoji,
   ) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
@@ -23,6 +24,7 @@ class RegistrationButtonController extends _$RegistrationButtonController {
         'name': title,
         'day_of_week': selectedDayOfWeek,
         'notification_time': _timeToString(notificationTime),
+        'emoji': emoji,
       });
     });
   }

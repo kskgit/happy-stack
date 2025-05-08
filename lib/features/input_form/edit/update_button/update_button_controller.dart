@@ -16,6 +16,7 @@ class UpdatButtunoCntroller extends _$UpdatButtunoCntroller {
     required String title,
     required int selectedDayOfWeek,
     required TimeOfDay notificationTime,
+    String? emoji,
   }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
@@ -24,6 +25,7 @@ class UpdatButtunoCntroller extends _$UpdatButtunoCntroller {
         'name': title,
         'day_of_week': selectedDayOfWeek,
         'notification_time': _timeToString(notificationTime),
+        'emoji': emoji,
       }).eq('id', happinessId);
     });
   }

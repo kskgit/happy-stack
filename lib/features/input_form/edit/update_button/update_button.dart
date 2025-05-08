@@ -16,6 +16,7 @@ class UpdateButton extends ConsumerWidget {
     required this.notificationTime,
     required this.selectedDayOfWeek,
     required this.isValid,
+    this.emoji,
     super.key,
   });
 
@@ -24,6 +25,7 @@ class UpdateButton extends ConsumerWidget {
   final String title;
   final TimeOfDay notificationTime;
   final int selectedDayOfWeek;
+  final String? emoji;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,6 +44,7 @@ class UpdateButton extends ConsumerWidget {
               title: title,
               selectedDayOfWeek: selectedDayOfWeek,
               notificationTime: notificationTime,
+              emoji: emoji,
             );
         for (final day in DayOfWeek.values) {
           ref

@@ -14,6 +14,7 @@ class RegistrationButton extends ConsumerWidget {
     required this.selectedDayOfWeek,
     required this.notificationTime,
     required this.isValid,
+    this.emoji,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class RegistrationButton extends ConsumerWidget {
   final TimeOfDay notificationTime;
   final int selectedDayOfWeek;
   final bool Function() isValid;
+  final String? emoji;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,6 +40,7 @@ class RegistrationButton extends ConsumerWidget {
               title,
               selectedDayOfWeek,
               notificationTime,
+              emoji,
             );
         for (final day in DayOfWeek.values) {
           ref

@@ -13,6 +13,7 @@ class InputForm extends StatefulWidget {
     this.initialTitle,
     this.initialSelectedDayOfWeek,
     this.initialNotificationTime,
+    this.initialEmoji,
     super.key,
   });
 
@@ -20,6 +21,7 @@ class InputForm extends StatefulWidget {
   final String? initialTitle;
   final int? initialSelectedDayOfWeek;
   final TimeOfDay? initialNotificationTime;
+  final String? initialEmoji;
 
   @override
   State<InputForm> createState() {
@@ -31,6 +33,7 @@ class _InputFormState extends State<InputForm> {
   late String title;
   late int selectedDayOfWeek;
   late TimeOfDay notificationTime;
+  String? emoji;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -39,6 +42,7 @@ class _InputFormState extends State<InputForm> {
     title = widget.initialTitle ?? '';
     selectedDayOfWeek = widget.initialSelectedDayOfWeek ?? 0;
     notificationTime = widget.initialNotificationTime ?? TimeOfDay.now();
+    emoji = widget.initialEmoji;
   }
 
   bool isValid() {
@@ -66,9 +70,15 @@ class _InputFormState extends State<InputForm> {
               children: [
                 TitleTextField(
                   initialValue: title,
+                  initialEmoji: emoji,
                   onChanged: (value) {
                     setState(() {
                       title = value;
+                    });
+                  },
+                  onEmojiChanged: (value) {
+                    setState(() {
+                      emoji = value;
                     });
                   },
                 ),
@@ -114,6 +124,7 @@ class _InputFormState extends State<InputForm> {
                     title: title,
                     selectedDayOfWeek: selectedDayOfWeek,
                     notificationTime: notificationTime,
+                    emoji: emoji,
                     isValid: isValid,
                   )
                 else
@@ -124,6 +135,7 @@ class _InputFormState extends State<InputForm> {
                         title: title,
                         notificationTime: notificationTime,
                         selectedDayOfWeek: selectedDayOfWeek,
+                        emoji: emoji,
                         isValid: isValid,
                       ),
                       const SizedBox(height: 20),
