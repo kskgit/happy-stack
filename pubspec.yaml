@@ -39,7 +39,7 @@ dependencies:
   freezed: ^3.0.0
   freezed_annotation: ^3.0.0
   google_sign_in: ^6.2.2
-  graphql_codegen: ^1.1.1
+  graphql_codegen: ^2.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hooks_riverpod: ^2.6.1
